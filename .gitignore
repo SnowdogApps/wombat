@@ -92,4 +92,5 @@ Thumbs.db
 
 # Wombat config and data
 /config.json
+/public
 /content

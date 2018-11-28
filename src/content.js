@@ -1,20 +1,71 @@
+const fs = require('fs-extra')
 const path = require('path')
+const camelCase = require('lodash/camelCase')
+const showdown = require('showdown')
+const converter = new showdown.Converter()
 
-const init = async (lang) => {
-  const types = require('./get-types')
-  const singles = require('./get-singles')
+const filterCollection = require('./filter-collection')
 
-  const contentPath = path.resolve('./content')
-  const typesPath = path.join(contentPath, lang, 'type')
-  const singlesPath = path.join(contentPath, lang, 'single')
+const walk = async dir => {
+  const tree = {}
+  const files = await fs.readdir(dir)
 
-  const typesData = await types(typesPath)
-  const singlesData = await singles(singlesPath, typesData)
+  for (let file of files) {
+    const filePath = path.join(dir, file)
+    const fileName = path.basename(filePath)
+    const propName = camelCase(fileName.replace(/\..*/, ''))
+    const stat = await fs.stat(filePath)
 
-  return {
-    type: typesData,
-    single: singlesData
+    if (stat.isDirectory()) {
+      tree[propName] = await walk(filePath)
+    }
+
+    if (stat.isFile()) {
+      const content = await fs.readFile(filePath, 'utf8')
+      const extension = path.extname(filePath)
+
+      switch(extension) {
+        case '.json':
+          tree[propName] = JSON.parse(content)
+          break
+        case '.md':
+          tree[propName] = converter.makeHtml(content)
+          break
+        default:
+          tree[propName] = content
+      }
+    }
   }
+
+  return tree
 }
 
-module.exports = init
+const relation = (collections, item) => {
+  const props = Object.keys(item)
+
+  props.forEach(prop => {
+    if (item[prop].collectionName) {
+      const collection = collections[item[prop].collectionName]
+      const config = item[prop].filter
+
+      item[prop] = filterCollection(collection, config)
+    }
+  })
+
+  return item
+}
+
+module.exports = async () => {
+  const content = await walk('content')
+
+  Object.keys(content).forEach(lang => {
+    Object.keys(content[lang].entity).forEach(item => {
+      content[lang].entity[item] = relation(
+        content[lang].collection,
+        content[lang].entity[item]
+      )
+    })
+  })
+
+  return content
+}
