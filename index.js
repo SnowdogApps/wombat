@@ -6,11 +6,7 @@ const getServer = require('./src/server')
 
 async function init() {
   // Prepare content
-  const content = await config.langs.reduce(async (obj, lang) => {
-    const langCollection = await obj
-    langCollection[lang] = await getContent(lang)
-    return langCollection
-  }, {})
+  const content = await getContent()
 
   // Boot server
   const server = await getServer()

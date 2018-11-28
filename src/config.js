@@ -10,7 +10,6 @@ if (fs.existsSync(configPath)) {
 }
 
 const defaults = {
-  langs: ['en'],
   defaultLang: 'en'
 }
 
