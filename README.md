@@ -21,9 +21,10 @@ Simple open-source self-hosted Content Management Framework (headless-CMS) to po
       "start": "wombat"
     },
    ```
-4. Create `/content/[languages]/(single|type)` and `/public` directories
-5. (Optional) Create `conifg.json` file
-6. Run `yarn start` to turn on the Wombat!
+4. Create content following [Content structure](#content-structure) description
+5. Create `/public` directory to host static assets
+6. (Optional) Create `conifg.json` file
+7. Run `yarn start` to turn on the Wombat!
 
 ## Config options
 * `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param
@@ -41,7 +42,7 @@ Designed to store sets of similar data, like blog posts, authors, job offers etc
 - Every property of an item collection needs to be a separate JSON or Markdown file.
 
 ### Entities
-Created to keep a single object like a landing page content or global configuration object.
+Created to keep a single object like a landing page content or global configuration.
 - Entities are stored in `entity` directory inside each language.
 - Each entity needs to be added as a directory.
 - Every property of entity needs to be a separate JSON or Markdown file.
