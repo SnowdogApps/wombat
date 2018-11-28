@@ -20,8 +20,9 @@
     "lint": "eslint **/*.js"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "fs-extra": "^7.0.1",
-    "hapi": "^17.8.1",
+    "helmet": "^3.15.0",
     "lodash": "^4.17.11",
     "showdown": "^1.9.0"
   },
