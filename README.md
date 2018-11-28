@@ -61,7 +61,7 @@ Create new prop JSON file with relation config:
 }
 ```
 
-### Example content tree:
+### Example content tree
 ```
 content
 └── en
