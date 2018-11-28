@@ -4,6 +4,7 @@ const helmet = require('helmet')
 const camelCase = require('lodash/camelCase')
 
 const config = require('./config')
+const filterCollection = require('./filter-collection')
 
 const init = async content => {
   const app = express()
@@ -16,12 +17,14 @@ const init = async content => {
   app.use('/', express.static(path.resolve('./public')))
 
   // Dynamic routes
-  app.get('/:type(single|type)?/:name', (request, response) => {
-    const type = camelCase(request.params.type)
+  app.get('/entity/:name', (request, response) => {
+    const type = 'entity'
     const name = camelCase(request.params.name)
     const lang = request.query.lang || config.defaultLang
+
     try {
       const data = content[lang][type][name]
+
       if (!data) throw new Error()
       response.send(data)
     }
@@ -30,13 +33,23 @@ const init = async content => {
     }
   })
 
-  app.get('/type/:name/:id', (request, response) => {
+  app.get('/collection/:name', (request, response) => {
+    const type = 'collection'
     const name = camelCase(request.params.name)
-    const id = camelCase(request.params.id)
     const lang = request.query.lang || config.defaultLang
 
+    const filter = {
+      items: request.query.items ? request.query.items.split(',') : null,
+      limit: request.query.limit,
+      sort: request.query.sort,
+      sortBy: request.query.sortBy
+    }
+
     try {
-      const data = content[lang].type[name][id]
+      let data = content[lang][type][name]
+
+      data = filterCollection(data, filter)
+
       if (!data) throw new Error()
       response.send(data)
     }

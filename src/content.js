@@ -1,12 +1,10 @@
 const fs = require('fs-extra')
 const path = require('path')
 const camelCase = require('lodash/camelCase')
-const isArray = require('lodash/isArray')
-const toArray = require('lodash/toArray')
-const sortBy = require('lodash/sortBy')
-const pick = require('lodash/pick')
 const showdown = require('showdown')
 const converter = new showdown.Converter()
+
+const filterCollection = require('./filter-collection')
 
 const walk = async dir => {
   const tree = {}
@@ -42,29 +40,15 @@ const walk = async dir => {
   return tree
 }
 
-const relation = (types, item) => {
+const relation = (collections, item) => {
   const props = Object.keys(item)
 
   props.forEach(prop => {
-    if (item[prop].contentType) {
-      const type = camelCase(item[prop].contentType)
-      const config = item[prop]
+    if (item[prop].collectionName) {
+      const collection = collections[item[prop].collectionName]
+      const config = item[prop].filter
 
-      if (isArray(config.items)) {
-        item[prop] = pick(types[type], config.items)
-      }
-
-      if (config.items.qty && config.items.sortBy) {
-        let items = toArray(types[type])
-        items = sortBy(items, [config.items.sortBy])
-
-        if (config.items.order === 'desc') {
-          items = items.reverse()
-        }
-
-        item[prop] = items.splice(0, config.items.qty)
-      }
-
+      item[prop] = filterCollection(collection, config)
     }
   })
 
@@ -75,10 +59,10 @@ module.exports = async () => {
   const content = await walk('content')
 
   Object.keys(content).forEach(lang => {
-    Object.keys(content[lang].single).forEach(item => {
-      content[lang].single[item] = relation(
-        content[lang].type,
-        content[lang].single[item]
+    Object.keys(content[lang].entity).forEach(item => {
+      content[lang].entity[item] = relation(
+        content[lang].collection,
+        content[lang].entity[item]
       )
     })
   })
