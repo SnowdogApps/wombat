@@ -1,13 +1,21 @@
 {
-  "name": "wombat",
-  "version": "0.0.0",
-  "bin": "./bin/wombat.js",
-  "main": "index.js",
-  "license": "MIT",
-  "author": {
-    "name": "Bartek Igielski",
-    "email": "bartek.igielski@snow.dog"
+  "name": "@snowdog/wombat",
+  "version": "1.0.0-alpha.0",
+  "description": "File based, headless CMS for building configurable API",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnowdogApps/wombat.git"
   },
+  "bugs": {
+    "url": "https://github.com/SnowdogApps/wombat/issues"
+  },
+  "homepage": "https://github.com/SnowdogApps/wombat#readme",
+  "license": "MIT",
+  "author": "Bartek Igielski <bartek.igielski@snow.dog>",
+  "bin": {
+    "wombat": "./bin/wombat.js"
+  },
+  "main": "index.js",
   "scripts": {
     "lint": "eslint **/*.js"
   },
