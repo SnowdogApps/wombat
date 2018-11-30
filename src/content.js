@@ -4,7 +4,7 @@ const camelCase = require('lodash/camelCase')
 const showdown = require('showdown')
 const converter = new showdown.Converter()
 
-const filterCollection = require('./filter-collection')
+const filterCollection = require('./get-collection')
 
 const walk = async dir => {
   const tree = {}

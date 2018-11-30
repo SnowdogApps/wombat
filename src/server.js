@@ -4,7 +4,7 @@ const helmet = require('helmet')
 const camelCase = require('lodash/camelCase')
 
 const config = require('./config')
-const filterCollection = require('./filter-collection')
+const filterCollection = require('./get-collection')
 
 const init = async content => {
   const app = express()
