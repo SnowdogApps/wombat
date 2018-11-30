@@ -13,22 +13,22 @@ Simple open-source self-hosted Content Management Framework (headless-CMS) to po
 - **Front-end agnostic** - Simple REST API can be used by any application
 
 ## Setup
-1. Create a new directory and initialize a JS project using `yarn init`
-2. Add Wombat as a dependency `yarn add @snowdog/wombat`
-3. Add a `script` in `package.json` to run Wombat
+1. Create a new directory and initialize a JS project using `yarn init`.
+2. Add Wombat as a dependency `yarn add @snowdog/wombat`.
+3. Add a `script` in `package.json` to run Wombat:
    ```json
     "scripts": {
       "start": "wombat"
     },
    ```
-4. Create content following [Content structure](#content-structure) description
-5. Create `/public` directory to host static assets
-6. (Optional) Create `conifg.json` file
+4. Create content following [Content structure](#content-structure) description.
+5. Create `/public` directory to host static assets.
+6. (Optional) Create `conifg.json` file.
 7. Run `yarn start` to turn on the Wombat!
 
 ## Config options
-* `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param
-* `port` (default `3000`) - Port used by the web server to listen for requests
+* `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param.
+* `port` (default `3000`) - Port used by the web server to listen for requests.
 
 ## Content structure
 All content is kept in `/content` directory.
@@ -46,7 +46,7 @@ Created to keep a single object like a landing page content or global configurat
 - Entities are stored in `entity` directory inside each language.
 - Each entity needs to be added as a directory.
 - Every property of entity needs to be a separate JSON or Markdown file.
-- You can define the relation between entity and collection
+- You can define the relation between entity and collection.
 
 ### How to define a relation between entity and collection
 Create new prop JSON file with relation config:
@@ -54,8 +54,8 @@ Create new prop JSON file with relation config:
 {
   "collectionName": "collectionName", // required
   "filter": {
-    "items": ["award", "about", "partner"], // (optional)
-    "sortBy": "title", // (optional) if defined collection is returned as array
+    "items": ["award", "about", "partner"], // (optional) Array of collection items IDs. Items order is preserved.
+    "sortBy": "title", // (optional) prop name used for sorting
     "sort": "asc", // (optional) `desc` is default - `sortBy` required to use it
     "limit": 2 // (optional) - `sortBy` required to use it
   }
@@ -85,23 +85,23 @@ content
 ```
 ## API
 ### `/entity/{name}`
-Retrieve an entity item
+Retrieve an entity item.
 
 **Example:**
-To get `home` send request to `/entity/home`
+To get `home` send request to `/entity/home`.
 
 **URL params:**
-- `lang` - return content in given lang
+- `lang` - Return content in given lang.
 
 ### `/collection/{name}`
-Retrieve the whole collection as object
+Retrieve the whole collection as array.
 
 **Example:**
 To get `blog` send request to `/collection/blog`
 
 **URL params:**
-- `lang` - return content in given lang
-- `items` - list of coma separated IDs of collection items
-- `sortBy` - Prop name used to sort collection. Collection will be returned as array.
+- `lang` - Return content in given lang.
+- `items` - List of coma separated IDs of collection items. Items order is preserved.
+- `sortBy` - Prop name used for sorting.
 - `sort` - Can be set to `asc`. `sortBy` required to use it.
 - `limit` - Limit numer or returned collection items. `sortBy` required to use it.
