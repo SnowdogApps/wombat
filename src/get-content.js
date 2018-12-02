@@ -7,6 +7,7 @@ const converter = new showdown.Converter()
 const filterCollection = require('./get-collection')
 
 const walk = async dir => {
+  dir = path.resolve(dir)
   const tree = {}
   const files = await fs.readdir(dir)
 
