@@ -1,5 +1,6 @@
 const toArray = require('lodash/toArray')
 const sortBy = require('lodash/sortBy')
+const camelCase = require('lodash/camelCase')
 
 module.exports = (collectionObj, config = {}) => {
   const collection = Object.assign({}, collectionObj)
@@ -13,7 +14,9 @@ module.exports = (collectionObj, config = {}) => {
   // Get selected items by ID
   if (config.items) {
     const itemIds = toArray(config.items)
-    items = itemIds.map(item => collection[item])
+    items = itemIds
+      .map(item => camelCase(item))
+      .map(item => collection[item])
   }
   else {
     // Convert whole collection to array
