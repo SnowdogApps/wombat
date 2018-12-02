@@ -1,9 +1,7 @@
 const { parse } = require('url')
 const { config } = require('@snowdog/wombat')
 
-const content = require('./db.json')
-
-module.exports = async (request, response) => {
+module.exports = content => (request, response) => {
   const params = parse(request.url, true).query
   const type = 'entity'
   const name = params.name

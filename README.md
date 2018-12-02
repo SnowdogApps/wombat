@@ -4,7 +4,7 @@ Simple open-source self-hosted Content Management Framework (headless-CMS) to po
 
 ## Features
 - **Simple** - Designed to replace Wordpress in building simple company / product / event pages
-- **Fast** - Build on top of Express.js and flat files
+- **Fast** - Serverless friendly, but also can be used as Express.js server
 - **Lightweight** - Just 5 dependencies, no database or other system-wide requirements
 - **Two types of data** - Unlike Contentful or Strapi, offers not only items collection but also single entities like pages or configs
 - **Full internationalization** - Every piece content is assigned to one language, so you have complete freedom in customizing it
@@ -29,26 +29,34 @@ Simple open-source self-hosted Content Management Framework (headless-CMS) to po
       "start": "wombat start"
     },
    ```
-4. Run `yarn start` to turn on the Wombat!
+4. Run `yarn start` to start the server
 
 ## Serverless functions
 This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builders/node-js-now-node/), but setting up any other serverless env looks simillar.
 
-1. In your project with `now.json` create an `/api` directory
+1. In your project with `now.json` create an `api/` directory
 2. Inside run `yarn init` and then `yarn add @snowdog/wombat`
+3. In `api/package.json` add automatic DB building and option to run development server
+   ```
+    "scripts": {
+        "postinstall": "wombat build",
+        "dev": "wombat start"
+    }
+   ```
 3. Define new builds and routes in `now.json`
    ```
-{
-    "builds": [
-        { "src": "api/*.js", "use": "@now/node" }
-    ],
-    "routes": [
-        { "src": "/api/entity/(?<name>[^/]*)", "dest": "/api/entity.js?name=$name" },
-        { "src": "/api/collection/(?<name>[^/]*)", "dest": "/api/collection.js?name=$name" }
-    ]
-}
+    {
+        "builds": [
+            { "src": "api/*.js", "use": "@now/node" }
+        ],
+        "routes": [
+            { "src": "/api/entity/(?<name>[^/]*)", "dest": "/api/entity.js?name=$name" },
+            { "src": "/api/collection/(?<name>[^/]*)", "dest": "/api/collection.js?name=$name" }
+        ]
+    }
    ```
-4. Copy [collection.js](./examples/zeit-now/collection.js) and [entity.js](./examples/zeit-now/entity.js) from examples to `/api` directory
+4. Copy [collection.js](./examples/now/collection.js) and [entity.js](./examples/now/entity.js) from examples to `/api` directory
+5. Deploy your app via `now`
 
 ## Config options
 * `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param.
