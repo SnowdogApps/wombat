@@ -4,6 +4,11 @@ const getContent = require('./get-content')
 
 module.exports = async () => {
   const dbPath = path.resolve('./db.json')
-  const content = JSON.stringify(await getContent())
-  await fs.writeFile(dbPath, content, 'utf8')
+
+  if (await fs.pathExists(dbPath)) {
+    await fs.remove(dbPath)
+  }
+
+  const content = await getContent()
+  await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
 }

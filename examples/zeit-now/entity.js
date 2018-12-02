@@ -1,5 +1,7 @@
 const { parse } = require('url')
-const { config, getContent } = require('@snowdog/wombat')
+const { config } = require('@snowdog/wombat')
+
+const content = require('./db.json')
 
 module.exports = async (request, response) => {
   const params = parse(request.url, true).query
@@ -8,11 +10,10 @@ module.exports = async (request, response) => {
   const lang = params.lang || config.defaultLang
 
   try {
-    const content = await getContent()
     const data = content[lang][type][name]
 
     if (!data) throw new Error()
-    response.end(data)
+    response.end(JSON.stringify(data))
   }
   catch (e) {
     response.statusCode = 404
