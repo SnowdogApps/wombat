@@ -1,6 +1,6 @@
 {
   "name": "@snowdog/wombat",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "File based, headless CMS for building configurable API",
   "repository": {
     "type": "git",
