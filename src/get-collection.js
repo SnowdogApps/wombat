@@ -1,7 +1,7 @@
 const toArray = require('lodash/toArray')
 const sortBy = require('lodash/sortBy')
 
-module.exports = (collectionObj, config) => {
+module.exports = (collectionObj, config = {}) => {
   const collection = Object.assign({}, collectionObj)
   let items = []
 

@@ -1,12 +1,15 @@
-const getContent = require('./src/content')
-const getServer = require('./src/server')
+const build = require('./src/build')
+const config = require('./src/config')
+const getCollection = require('./src/get-collection')
+const getContent = require('./src/get-content')
+const server = require('./src/server')
+const start = require('./src/start')
 
-async function init() {
-  // Prepare content
-  const content = await getContent()
-
-  // Start server
-  await getServer(content)
+module.exports = {
+  build,
+  config,
+  getCollection,
+  getContent,
+  server,
+  start
 }
-
-module.exports = init

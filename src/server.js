@@ -4,9 +4,9 @@ const helmet = require('helmet')
 const camelCase = require('lodash/camelCase')
 
 const config = require('./config')
-const filterCollection = require('./get-collection')
+const getCollection = require('./get-collection')
 
-const init = async content => {
+const init = content => {
   const app = express()
   const port = config.port
 
@@ -48,7 +48,7 @@ const init = async content => {
     try {
       let data = content[lang][type][name]
 
-      data = filterCollection(data, filter)
+      data = getCollection(data, filter)
 
       if (!data) throw new Error()
       response.send(data)

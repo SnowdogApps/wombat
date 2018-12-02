@@ -56,7 +56,13 @@ const relation = (collections, item) => {
 }
 
 module.exports = async () => {
-  const content = await walk('content')
+  const dbPath = path.resolve('./db.json')
+
+  if (await fs.pathExists(dbPath)) {
+    return JSON.parse(await fs.readFile(dbPath, 'utf8'))
+  }
+
+  const content = await walk('./content')
 
   Object.keys(content).forEach(lang => {
     Object.keys(content[lang].entity).forEach(item => {
