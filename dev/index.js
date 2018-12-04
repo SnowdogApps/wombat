@@ -3,10 +3,11 @@ const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 
-const config = require('../config')
-const build = require('../build')
-const getEntity = require('../get-entity')
-const getCollection = require('../get-collection')
+const wombat = require('../index')
+const config = wombat.config
+const build = wombat.build
+const getEntity = wombat.getEntity
+const getCollection = wombat.getCollection
 
 module.exports = async () => {
   // Build db
