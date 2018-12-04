@@ -1,9 +1,14 @@
 const toArray = require('lodash/toArray')
 const sortBy = require('lodash/sortBy')
 const camelCase = require('lodash/camelCase')
+const pick = require('lodash/pick')
 
-module.exports = (collectionObj, config = {}) => {
-  const collection = Object.assign({}, collectionObj)
+const getContent = require('./get-content')
+
+module.exports = async (lang, name, query = {}) => {
+  name = camelCase(name)
+  const content = await getContent()
+  const collection = content[lang]['collection'][name]
   let items = []
 
   // Move object ID inside element
@@ -12,11 +17,9 @@ module.exports = (collectionObj, config = {}) => {
   })
 
   // Get selected items by ID
-  if (config.items) {
-    const itemIds = toArray(config.items)
-    items = itemIds
-      .map(item => camelCase(item))
-      .map(item => collection[item])
+  if (query.items) {
+    const itemIds = toArray(query.items).map(item => camelCase(item))
+    items = itemIds.map(item => collection[item])
   }
   else {
     // Convert whole collection to array
@@ -24,17 +27,40 @@ module.exports = (collectionObj, config = {}) => {
   }
 
   // Sort by prop
-  if (config.sortBy) {
-    items = sortBy(items, config.sortBy)
+  if (query.sortBy) {
+    items = sortBy(items, query.sortBy)
 
-    if (config.sort === 'asc') {
+    if (query.sort === 'asc') {
       items = items.reverse()
-    }
-
-    if (config.limit) {
-      items = items.splice(0, config.limit)
     }
   }
 
-  return items
+  if (query.limit) {
+    items = items.splice(0, query.limit)
+  }
+
+  const pagination = query.page && query.perPage ? {
+    total: items.length,
+    totalPages: Math.ceil(items.length / query.perPage)
+  } : false
+
+  if (query.page && query.perPage) {
+    const start = (query.page - 1) * query.perPage
+    items = items.splice(start, query.perPage)
+  }
+
+  if (query.props) {
+    items = items.map(item => {
+      return pick(item, query.props)
+    })
+  }
+
+  if (!items.length) {
+    return null
+  }
+
+  return {
+    items,
+    pagination
+  }
 }

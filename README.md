@@ -71,16 +71,19 @@ Created to keep a single object like a landing page content or global configurat
 - Every property of entity needs to be a separate JSON or Markdown file.
 - You can define the relation between entity and collection.
 
-### How to define a relation between entity and collection
+### How to define a relation between entity and collection?
 Create new prop JSON file with relation config:
 ```js
 {
   "collectionName": "collectionName", // required
-  "filter": {
-    "items": ["award", "about", "partner"], // (optional) Array of collection items IDs. Items order is preserved.
-    "sortBy": "title", // (optional) prop name used for sorting
-    "sort": "asc", // (optional) `desc` is default - `sortBy` required to use it
-    "limit": 2 // (optional) - `sortBy` required to use it
+  "query": { // optional
+    "sortBy": "title", // prop name used for sorting
+    "sort": "asc", // `desc` is default - `sortBy` required to use it
+    "limit": 2, // limit numer of returned items
+    "page": 1, // page number
+    "perPage": 100, // numer of items per page
+    "items": ["award", "about", "partner"], // Array of collection items IDs. Items order is preserved.
+    "props": ["id", "content"] // return only selected object props
   }
 }
 ```
@@ -124,7 +127,11 @@ To get `blog` send request to `/collection/blog`
 
 **URL params:**
 - `lang` - Return content in given lang.
-- `items` - List of coma separated IDs of collection items. Items order is preserved.
-- `sortBy` - Prop name used for sorting.
-- `sort` - Can be set to `asc`. `sortBy` required to use it.
-- `limit` - Limit numer or returned collection items. `sortBy` required to use it.
+- `query` - Query object to filter collection.
+  - `sortBy` - Prop name used for sorting.
+  - `sort` - `desc` is default - `sortBy` required to use it.
+  - `limit` - Limit numer of returned items.
+  - `page` - Page number.
+  - `perPage` - Numer of items per page.
+  - `items` - Array of collection items IDs. Items order is preserved.
+  - `props` - Returns only selected object props, GraphQL-like.
