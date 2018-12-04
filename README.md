@@ -1,3 +1,7 @@
+<center>
+  <img src="./assets/logo.svg" height="200">
+</center>
+
 # Wombat
 ### Flat file, headless CMS for building configurable API
 Simple open-source self-hosted Content Management Framework (headless-CMS) to powerful API with no effort.
