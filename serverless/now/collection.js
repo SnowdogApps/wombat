@@ -1,14 +1,14 @@
 const { parse } = require('url')
 const { config, getCollection } = require('@snowdog/wombat')
 
-module.exports = async (request, response) => {
+module.exports = content => async (request, response) => {
   const params = parse(request.url, true).query
   const name = params.name
   const lang = params.lang || config.defaultLang
   const query = params.query
 
   try {
-    const collection = await getCollection(lang, name, query)
+    const collection = await getCollection(content, lang, name, query)
 
     if (!collection.items) throw new Error()
 

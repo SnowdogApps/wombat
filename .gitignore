@@ -91,7 +91,7 @@ lerna-debug.log
 Thumbs.db
 
 # Wombat config and data
-/config.json
-/public
-/content
-/db.json
+db.json
+config.json
+public
+content

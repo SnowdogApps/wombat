@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const wombat = require('../index')
 const config = wombat.config
 const build = wombat.build
+const getContent = wombat.getContent
 const getEntity = wombat.getEntity
 const getCollection = wombat.getCollection
 
@@ -16,6 +17,9 @@ module.exports = async () => {
   // Start server
   const app = express()
   const port = config.port
+
+  // Prepare content
+  const content = await getContent()
 
   // Security
   app.use(cors())
@@ -30,7 +34,7 @@ module.exports = async () => {
     const lang = request.query.lang || config.defaultLang
 
     try {
-      const entity = await getEntity(lang, name)
+      const entity = await getEntity(content, lang, name)
 
       if (!entity) throw new Error()
       response.send(entity)
@@ -46,7 +50,7 @@ module.exports = async () => {
     const query = request.query.query ? JSON.parse(request.query.query) : undefined
 
     try {
-      const collection = await getCollection(lang, name, query)
+      const collection = await getCollection(content, lang, name, query)
 
       if (!collection.items) throw new Error()
 
