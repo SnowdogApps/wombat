@@ -1,13 +1,13 @@
 const { parse } = require('url')
 const { config, getEntity } = require('@snowdog/wombat')
 
-module.exports = async (request, response) => {
+module.exports = content => async (request, response) => {
   const params = parse(request.url, true).query
   const name = params.name
   const lang = params.lang || config.defaultLang
 
   try {
-    const entity = await getEntity(lang, name)
+    const entity = await getEntity(content, lang, name)
 
     if (!entity) throw new Error()
     response.end(JSON.stringify(entity))

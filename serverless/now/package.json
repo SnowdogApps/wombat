@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+      "postinstall": "wombat build",
+      "dev": "wombat dev"
+  },
+  "dependencies": {
+      "@snowdog/wombat": "^1.0.0-alpha.9"
+  }
+}
