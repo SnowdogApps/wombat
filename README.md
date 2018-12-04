@@ -4,13 +4,13 @@
 
 # Wombat
 ### Flat file, headless CMS for building configurable API
-Simple open-source self-hosted Content Management Framework (headless-CMS) to powerful API with no effort.
+Simple open-source serverless Content Management Framework (headless-CMS) to build powerful API effortlessly.
 
 ## Features
 - **Simple** - Designed to replace Wordpress in building simple company / product / event pages
-- **Fast** - Serverless friendly, but also can be used as Express.js server
-- **Lightweight** - Just 5 dependencies, no database or other system-wide requirements
-- **Two types of data** - Unlike Contentful or Strapi, offers not only items collection but also single entities like pages or configs
+- **Fast** - Serverless oriented, so performance is the key
+- **Lightweight** - Just 3 dependencies, no database or other system-wide requirements
+- **Two types of data** - Unlike Contentful or Strapi, offers not only items collection, but also single entities like pages or configs
 - **Full internationalization** - Every piece content is assigned to one language, so you have complete freedom in customizing it
 - **No strict schema** - Do you need each item within a content type to do be different and have a different structure for each language? No problem, sky is the limit!
 - **No Admin Panel** - You are not limited by the UI or poor UX, just you and bunch of JSON and Markdown files
@@ -20,22 +20,9 @@ Simple open-source self-hosted Content Management Framework (headless-CMS) to po
 1. Create content following [Content structure](#content-structure) description.
 2. Create `/public` directory to host static assets.
 3. (Optional) Create `conifg.json` file.
-4. Chose how you would like to host your content:
-   - monolithic built-in HTTP server
-   - serverless functions - for example Lambda function on [ZEIT Now](https://zeit.co/now)
+4. Chose serverless platform to host your functions, for example Lambda function on [ZEIT Now](https://zeit.co/now)
 
-## HTTP server
-1. Create a new directory and initialize a JS project using `yarn init`.
-2. Add Wombat as a dependency `yarn add @snowdog/wombat`.
-3. Add a `script` in `package.json` to run Wombat:
-   ```json
-    "scripts": {
-      "start": "wombat start"
-    },
-   ```
-4. Run `yarn start` to start the server
-
-## Serverless functions
+## Serverless deployment
 This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builders/node-js-now-node/), but setting up any other serverless env looks simillar.
 
 1. In your project with `now.json` create an `api/` directory
@@ -64,7 +51,7 @@ This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builde
 
 ## Config options
 * `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param.
-* `port` (default `3000`) - Port used by the web server to listen for requests.
+* `port` (default `3000`, only for development purpouses) Port used by the web server to listen for requests.
 
 ## Content structure
 All content is kept in `/content` directory.
