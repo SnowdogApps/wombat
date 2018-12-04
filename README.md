@@ -9,7 +9,7 @@ Simple open-source serverless Content Management Framework (headless-CMS) to bui
 ## Features
 - **Simple** - Designed to replace Wordpress in building simple company / product / event pages
 - **Fast** - Serverless oriented, so performance is the key
-- **Lightweight** - Just 3 dependencies, no database or other system-wide requirements
+- **Lightweight** - No framework, no database or other system-wide requirements
 - **Two types of data** - Unlike Contentful or Strapi, offers not only items collection, but also single entities like pages or configs
 - **Full internationalization** - Every piece content is assigned to one language, so you have complete freedom in customizing it
 - **No strict schema** - Do you need each item within a content type to do be different and have a different structure for each language? No problem, sky is the limit!
