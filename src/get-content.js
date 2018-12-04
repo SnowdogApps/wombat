@@ -4,8 +4,6 @@ const camelCase = require('lodash/camelCase')
 const showdown = require('showdown')
 const converter = new showdown.Converter()
 
-const filterCollection = require('./get-collection')
-
 const walk = async dir => {
   dir = path.resolve(dir)
   const tree = {}
@@ -41,21 +39,6 @@ const walk = async dir => {
   return tree
 }
 
-const relation = (collections, item) => {
-  const props = Object.keys(item)
-
-  props.forEach(prop => {
-    if (item[prop].collectionName) {
-      const collection = collections[item[prop].collectionName]
-      const config = item[prop].filter
-
-      item[prop] = filterCollection(collection, config)
-    }
-  })
-
-  return item
-}
-
 module.exports = async () => {
   const dbPath = path.resolve('./db.json')
 
@@ -63,16 +46,5 @@ module.exports = async () => {
     return JSON.parse(await fs.readFile(dbPath, 'utf8'))
   }
 
-  const content = await walk('./content')
-
-  Object.keys(content).forEach(lang => {
-    Object.keys(content[lang].entity).forEach(item => {
-      content[lang].entity[item] = relation(
-        content[lang].collection,
-        content[lang].entity[item]
-      )
-    })
-  })
-
-  return content
+  return await walk('./content')
 }

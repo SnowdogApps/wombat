@@ -1,25 +1,23 @@
 const { parse } = require('url')
 const { config, getCollection } = require('@snowdog/wombat')
 
-module.exports = content => (request, response) => {
+module.exports = async (request, response) => {
   const params = parse(request.url, true).query
-  const type = 'collection'
   const name = params.name
   const lang = params.lang || config.defaultLang
-
-  const filter = {
-    items: params.items ? params.items.split(',') : null,
-    limit: params.limit,
-    sort: params.sort,
-    sortBy: params.sortBy
-  }
+  const query = params.query
 
   try {
-    const collection = content[lang][type][name]
-    const data = getCollection(collection, filter)
+    const collection = await getCollection(lang, name, query)
 
-    if (!data) throw new Error()
-    response.end(JSON.stringify(data))
+    if (!collection.items) throw new Error()
+
+    if (collection.pagination) {
+      response.setHeader('X-Wombat-Total', collection.pagination.total)
+      response.setHeader('X-Wombat-TotalPages', collection.pagination.totalPages)
+    }
+
+    response.end(JSON.stringify(collection.items))
   }
   catch (e) {
     response.statusCode = 404
