@@ -5,7 +5,7 @@ module.exports = content => (request, response) => {
   const params = parse(request.url, true).query
   const name = params.name
   const lang = params.lang || config.defaultLang
-  const query = params.query
+  const query = JSON.parse(params.query)
 
   try {
     const collection = getCollection(content, lang, name, query)
