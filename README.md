@@ -1,10 +1,9 @@
-<center>
+<p align="center">
   <img src="./assets/logo.svg" height="200">
-</center>
+</p>
 
 # Wombat
-### Flat file, headless CMS for building configurable API
-Simple open-source serverless Content Management Framework (headless-CMS) to build powerful API effortlessly.
+Simple open-source flat-file serverless Content Management Framework (headless-CMS) to build powerful API effortlessly.
 
 ## Features
 - **Simple** - Designed to replace Wordpress in building simple company / product / event pages

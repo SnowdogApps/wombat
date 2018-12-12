@@ -1,12 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/public", "use": "@now/static" },
     { "src": "*.js", "use": "@now/node" }
   ],
   "routes": [
     { "src": "/entity/(?<name>[^/]*)", "dest": "/entity.js?name=$name" },
-    { "src": "/collection/(?<name>[^/]*)", "dest": "/collection.js?name=$name" },
-    { "src": "/static", "dest": "/api/public" }
+    { "src": "/collection/(?<name>[^/]*)", "dest": "/collection.js?name=$name" }
   ]
 }
