@@ -57,11 +57,11 @@ Created to keep a single object like a landing page content or global configurat
 - You can define the relation between entity and collection.
 
 ### How to define a relation between entity and collection?
-Create new prop JSON file with relation config:
+Create new JSON file inside entity directory to define relation:
 ```js
 {
-  "collectionName": "collectionName", // required
-  "query": { // optional
+  "query": {
+    "name": "collectionName", // (required) collection name
     "sortBy": "title", // prop name used for sorting
     "sort": "asc", // `desc` is default - `sortBy` required to use it
     "limit": 2, // limit numer of returned items
@@ -99,26 +99,25 @@ content
 Retrieve an entity item.
 
 **Example:**
-To get `home` send request to `/entity?name=home`.
+To get `home` entity send request to `/entity?name=home`.
 
 **URL params:**
-- `name` - Name of entity
+- `name` - (required) Name of entity
 - `lang` - Return content in given lang.
 
 ### `/collection`
 Retrieve the whole collection as array.
 
 **Example:**
-To get `blog` send request to `/collection?name=blog`
+To get `blog`collection send request to `/collection?name=blog`
 
 **URL params:**
-- `name` - Name of collection.
+- `name` - (required) Name of collection.
 - `lang` - Return content in given lang.
-- `query` - Query object to filter collection.
-  - `sortBy` - Prop name used for sorting.
-  - `sort` - `desc` is default - `sortBy` required to use it.
-  - `limit` - Limit numer of returned items.
-  - `page` - Page number.
-  - `perPage` - Numer of items per page.
-  - `items` - Array of collection items IDs. Items order is preserved.
-  - `props` - Returns only selected object props, GraphQL-like.
+- `sortBy` - Prop name used for sorting.
+- `sort` - `desc` is default - `sortBy` required to use it.
+- `limit` - Limit numer of returned items.
+- `page` - Page number.
+- `perPage` - Numer of items per page.
+- `items` - Array of collection items IDs. Items order is preserved.
+- `props` - Returns only selected object props, GraphQL-like.

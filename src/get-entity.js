@@ -7,11 +7,10 @@ module.exports = (content, lang, name) => {
   const entity = content[lang]['entity'][name]
 
   Object.keys(entity).map(prop => {
-    if (entity[prop].collectionName) {
+    if (entity[prop].query) {
       const collection = getCollection(
         content,
         lang,
-        entity[prop].collectionName,
         entity[prop].query
       )
 

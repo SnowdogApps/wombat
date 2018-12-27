@@ -3,8 +3,8 @@ const sortBy = require('lodash/sortBy')
 const camelCase = require('lodash/camelCase')
 const pick = require('lodash/pick')
 
-module.exports = (content, lang, name, query = {}) => {
-  name = camelCase(name)
+module.exports = (content, lang, query) => {
+  const name = camelCase(query.name)
   const collection = content[lang]['collection'][name]
   let items = []
 
