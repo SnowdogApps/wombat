@@ -16,6 +16,16 @@ module.exports = async () => {
   const content = await getContent()
 
   const server = http.createServer((request, response) => {
+    response.setHeader('Access-Control-Allow-Origin', '*')
+    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET')
+    response.setHeader('Access-Control-Max-Age', 2592000)
+
+    if (request.method === 'OPTIONS') {
+      response.statusCode = 204
+      response.end()
+      return
+    }
+
     const pathName = url.parse(request.url).pathname
 
     if (pathName === '/entity') {
