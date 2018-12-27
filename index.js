@@ -1,13 +1,13 @@
+const dev = require('./src/dev')
 const build = require('./src/build')
 const config = require('./src/config')
-const getCollection = require('./src/get-collection')
-const getContent = require('./src/get-content')
-const getEntity = require('./src/get-entity')
+const entity = require('./src/api/entity')
+const collection = require('./src/api/collection')
 
 module.exports = {
+  dev,
   build,
   config,
-  getCollection,
-  getContent,
-  getEntity
+  entity,
+  collection
 }
