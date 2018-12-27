@@ -95,3 +95,5 @@ db.json
 config.json
 public
 content
+yarn.lock
+!/yarn.lock

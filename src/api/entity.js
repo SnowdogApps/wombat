@@ -1,5 +1,6 @@
 const { parse } = require('url')
-const { config, getEntity } = require('@snowdog/wombat')
+const config = require('../config')
+const getEntity = require('../get-entity')
 
 module.exports = content => (request, response) => {
   const params = parse(request.url, true).query
@@ -9,10 +10,11 @@ module.exports = content => (request, response) => {
   try {
     const entity = getEntity(content, lang, name)
 
-    if (!entity) throw new Error()
+    if (!entity) throw new Error('Entity not found')
     response.end(JSON.stringify(entity))
   }
   catch (e) {
+    console.error(e)
     response.statusCode = 404
     response.end(`Cannot GET ${request.url}`)
   }
