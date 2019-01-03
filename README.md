@@ -14,25 +14,26 @@ Simple open-source flat-file serverless Content Management Framework (headless-C
 - **No Admin Panel** - You are not limited by the UI or poor UX, just you and bunch of JSON and Markdown files
 - **Front-end agnostic** - Simple REST API can be used by any application
 
-## Local setup
-1. Create content following [Content structure](#content-structure) description.
+
+## Setup
+1. Add Wombat as dependecy `yarn add @snowdog/wombat`
+2. Create content following [Content structure](#content-structure) description.
 2. Add `"dev": "wombat start"` to `package.json` scripts section
 3. Run `yarn dev` and enjoy working with your new API
 
 ## Serverless deployment
 This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builders/node-js-now-node/), but setting up any other serverless env looks simillar.
 
-1. Add Wombat as dependecy `yarn add @snowdog/wombat`
-2. In `package.json` add automatic DB building and option to run development server
+1. In `package.json` add automatic DB building and option to run development server
    ```
     "scripts": {
       "postinstall": "wombat build",
       "dev": "wombat start"
     }
    ```
-3. Define new builds and routes in `now.json` acording to [the example](./examples/now/now.json)
-4. Copy [collection.js](./examples/now/collection.js) and [entity.js](./examples/now/entity.js) from examples
-5. Deploy your app via `now`
+2. Define new builds and routes in `now.json` acording to [the example](./examples/now/now.json)
+3. Copy [collection.js](./examples/now/collection.js) and [entity.js](./examples/now/entity.js) from examples
+4. Deploy your app via `now`
 
 ## Config options
 * `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param.
