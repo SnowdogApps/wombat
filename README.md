@@ -24,7 +24,7 @@ Simple open-source flat-file serverless Content Management Framework (headless-C
 ## Serverless deployment
 This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builders/node-js-now-node/), but setting up any other serverless env looks simillar.
 
-1. In `package.json` add automatic DB building and option to run development server
+1. In `package.json` add automatic DB building after installing dependecies
    ```
     "scripts": {
       "postinstall": "wombat build",
