@@ -18,7 +18,7 @@ Simple open-source flat-file serverless Content Management Framework (headless-C
 ## Setup
 1. Add Wombat as dependecy `yarn add @snowdog/wombat`
 2. Create content following [Content structure](#content-structure) description.
-2. Add `"dev": "wombat start"` to `package.json` scripts section
+2. Add `"dev": "wombat dev"` to `package.json` scripts section
 3. Run `yarn dev` and enjoy working with your new API
 
 ## Serverless deployment
@@ -28,7 +28,7 @@ This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builde
    ```
     "scripts": {
       "postinstall": "wombat build",
-      "dev": "wombat start"
+      "dev": "wombat dev"
     }
    ```
 2. Define new builds and routes in `now.json` acording to [the example](./examples/now/now.json)
