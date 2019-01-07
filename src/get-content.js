@@ -30,8 +30,6 @@ const walk = async dir => {
         case '.md':
           tree[propName] = converter.makeHtml(content)
           break
-        default:
-          tree[propName] = content
       }
     }
   }
