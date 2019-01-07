@@ -18,6 +18,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint **/*.js",
+    "build": "./bin/wombat.js build",
     "dev": "./bin/wombat.js dev"
   },
   "dependencies": {
