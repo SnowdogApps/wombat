@@ -8,11 +8,11 @@ module.exports = (request, response, isDev = false) => {
     allowedOrigins = config.allowedOrigins
   }
   
-  if(isDev)
+  if (isDev)
   {
     response.setHeader('Access-Control-Allow-Origin', '*')
   }
-  else if(allowedOrigins.indexOf(origin) > -1) {
+  else if (allowedOrigins.indexOf(origin) > -1) {
     response.setHeader('Access-Control-Allow-Origin', origin)
   }
 
