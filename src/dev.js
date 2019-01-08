@@ -17,7 +17,8 @@ module.exports = async () => {
 
   const server = http.createServer((request, response) => {
     response.setHeader('Access-Control-Allow-Origin', '*')
-    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET')
+    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET')
+    response.setHeader('Access-Control-Expose-Headers', 'X-Wombat-Total, X-Wombat-TotalPages')
     response.setHeader('Access-Control-Max-Age', 2592000)
 
     if (request.method === 'OPTIONS') {
