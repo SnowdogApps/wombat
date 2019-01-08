@@ -1,6 +1,7 @@
 const { parse } = require('url')
 const config = require('../config')
 const getCollection = require('../get-collection')
+const setHeaders = require('../set-headers')
 
 module.exports = content => (request, response) => {
   const params = parse(request.url, true).query
@@ -10,6 +11,8 @@ module.exports = content => (request, response) => {
     const collection = getCollection(content, lang, params)
 
     if (!collection.items) throw new Error('Collection not found')
+
+    setHeaders(request, response);
 
     if (collection.pagination) {
       response.setHeader('X-Wombat-Total', collection.pagination.total)
