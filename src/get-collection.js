@@ -15,8 +15,11 @@ module.exports = (content, lang, query) => {
 
   // Get selected items by ID
   if (query.items) {
-    const itemIds = toArray(query.items).map(item => camelCase(item))
-    items = itemIds.map(item => collection[item])
+    if (typeof query.items === 'string') {
+      query.items = JSON.parse(query.items)
+    }
+
+    items = query.items.map(item => collection[camelCase(item)])
   }
   else {
     // Convert whole collection to array
@@ -47,6 +50,10 @@ module.exports = (content, lang, query) => {
   }
 
   if (query.props) {
+    if (typeof query.props === 'string') {
+      query.props = JSON.parse(query.props)
+    }
+
     items = items.map(item => {
       return pick(item, query.props)
     })
