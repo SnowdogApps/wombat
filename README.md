@@ -64,7 +64,7 @@ Create new JSON file inside entity directory to define relation:
   "query": {
     "name": "collectionName", // (required) collection name
     "sortBy": "title", // prop name used for sorting
-    "sort": "asc", // `desc` is default - `sortBy` required to use it
+    "sort": "desc", // `asc` is default - `sortBy` required to use it
     "limit": 2, // limit numer of returned items
     "page": 1, // page number
     "perPage": 100, // numer of items per page
@@ -139,7 +139,7 @@ Retrieve the whole collection as array.
 - `name` - (required) Name of collection.
 - `lang` - Return content in given lang.
 - `sortBy` - Prop name used for sorting.
-- `sort` - `desc` is default - `sortBy` required to use it.
+- `sort` - `asc` is default - `sortBy` required to use it.
 - `limit` - Limit numer of returned items.
 - `page` - Page number.
 - `perPage` - Numer of items per page.
