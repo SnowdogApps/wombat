@@ -26,7 +26,7 @@ module.exports = (content, lang, query) => {
   if (query.sortBy) {
     items = sortBy(items, query.sortBy)
 
-    if (query.sort === 'asc') {
+    if (query.sort === 'desc') {
       items = items.reverse()
     }
   }
