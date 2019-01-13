@@ -2,10 +2,13 @@ const http = require('http')
 const url = require('url')
 const path = require('path')
 const fs = require('fs-extra')
+const portfinder = require('portfinder')
 
 const config = require('./config')
 const build = require('./build')
 const getContent = require('./get-content')
+
+portfinder.basePort = config.port
 
 module.exports = async () => {
   const entityRequestHandler = require('./api/entity')
@@ -56,6 +59,11 @@ module.exports = async () => {
     }
   })
 
-  server.listen(config.port)
-  console.log(`Wombat is listening on port ${config.port}!`)
+  try {
+    const port = await portfinder.getPortPromise()
+    server.listen(port)
+    console.log(`Wombat is listening on port ${port}!`)
+  } catch(e) {
+    console.log(e)
+  }
 }
