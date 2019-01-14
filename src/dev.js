@@ -64,6 +64,6 @@ module.exports = async () => {
     server.listen(port)
     console.log(`Wombat is listening on port ${port}!`)
   } catch(e) {
-    console.log(e)
+    throw new Error(e)
   }
 }
