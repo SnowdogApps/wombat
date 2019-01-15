@@ -11,19 +11,7 @@ module.exports = (content, lang, query) => {
 
   // Move object ID inside element
   Object.keys(data).forEach(id => {
-    if (typeof data[id] !== 'object') {
-      data[id] = {
-        id,
-        value: data[id]
-      }
-    } else if (Array.isArray(data[id])) {
-      data[id] = {
-        id,
-        items: data[id]
-      }
-    } else {
-      data[id].id = id
-    }
+    data[id].id = id
   })
 
   // Get selected items by ID
