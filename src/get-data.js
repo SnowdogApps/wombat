@@ -1,7 +1,23 @@
-const toArray = require('lodash/toArray')
 const sortBy = require('lodash/sortBy')
 const camelCase = require('lodash/camelCase')
 const pick = require('lodash/pick')
+
+// Convert data to object
+const getObject = (id, data) => {
+  if (typeof data !== 'object') {
+    return {
+      id,
+      value: data
+    }
+  } else if (Array.isArray(data)) {
+    return {
+      id,
+      items: data
+    }
+  } else {
+    return data
+  }
+}
 
 module.exports = (content, lang, query) => {
   const name = camelCase(query.name)
@@ -16,11 +32,22 @@ module.exports = (content, lang, query) => {
 
   // Get selected items by ID
   if (query.items) {
-    items = query.items.map(item => data[camelCase(item)])
+    items = query.items.map(key => {
+      return getObject(key, data[camelCase(key)])
+    })
   }
   else {
-    // Convert whole data to array
-    items = toArray(data)
+    const keys = []
+
+    Object.keys(data).forEach(id => {
+      if (!data[id].query) {
+        keys.push(id)
+      }
+    })
+
+    items = keys.map(key => {
+      return getObject(key, data[camelCase(key)])
+    })
   }
 
   // Sort by prop
