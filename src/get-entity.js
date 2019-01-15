@@ -1,21 +1,21 @@
 const camelCase = require('lodash/camelCase')
-
-const getCollection = require('./get-collection')
+const getData = require('./get-data')
 
 module.exports = (content, lang, name) => {
   name = camelCase(name)
   const entity = content[lang]['entity'][name]
 
   Object.keys(entity).map(prop => {
-    if (entity[prop].query) {
-      const collection = getCollection(
+    const query = entity[prop].query
+
+    if (query) {
+      const data = getData(
         content,
         lang,
-        entity[prop].query
+        query
       )
-
-      if (collection) {
-        entity[prop] = collection.items
+      if (data) {
+        entity[prop] = data.items
       }
     }
   })
