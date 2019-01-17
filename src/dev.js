@@ -12,7 +12,10 @@ module.exports = async () => {
   const collectionRequestHandler = require('./api/collection')
 
   // Prepare content
-  await build()
+  if (config.buildContent) {
+    await build()
+  }
+
   const content = await getContent()
 
   const server = http.createServer((request, response) => {
