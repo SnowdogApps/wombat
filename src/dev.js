@@ -12,7 +12,7 @@ const cors = require('./api/cors')
 const entityRequestHandler = require('./api/entity')
 const collectionRequestHandler = require('./api/collection')
 
-portfinder.basePort = config.port
+portfinder.basePort = config.dev.port
 
 module.exports = async () => {
 
