@@ -7,25 +7,18 @@ const config = require('./config')
 const build = require('./build')
 const getContent = require('./get-content')
 
+const cors = require('./api/cors')
+const entityRequestHandler = require('./api/entity')
+const collectionRequestHandler = require('./api/collection')
+
 module.exports = async () => {
-  const entityRequestHandler = require('./api/entity')
-  const collectionRequestHandler = require('./api/collection')
 
   // Prepare content
   await build()
   const content = await getContent()
 
   const server = http.createServer((request, response) => {
-    response.setHeader('Access-Control-Allow-Origin', '*')
-    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET')
-    response.setHeader('Access-Control-Expose-Headers', 'X-Wombat-Total, X-Wombat-TotalPages')
-    response.setHeader('Access-Control-Max-Age', 2592000)
-
-    if (request.method === 'OPTIONS') {
-      response.statusCode = 204
-      response.end()
-      return
-    }
+    cors(request, response, true)
 
     const pathName = url.parse(request.url).pathname
 
