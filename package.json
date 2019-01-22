@@ -1,6 +1,6 @@
 {
   "name": "@snowdog/wombat",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0-alpha.17",
   "description": "File based, headless CMS for building configurable API",
   "repository": {
     "type": "git",
@@ -24,9 +24,10 @@
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
+    "jest": "^23.6.0",
     "lodash": "^4.17.11",
-    "showdown": "^1.9.0",
-    "jest": "^23.6.0"
+    "portfinder": "^1.0.20",
+    "showdown": "^1.9.0"
   },
   "devDependencies": {
     "eslint": "^5.12.0"

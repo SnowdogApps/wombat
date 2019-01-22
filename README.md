@@ -64,7 +64,7 @@ Create new JSON file inside entity directory to define relation:
   "query": {
     "name": "collectionName", // (required) collection name
     "sortBy": "title", // prop name used for sorting
-    "sort": "asc", // `desc` is default - `sortBy` required to use it
+    "sort": "desc", // `asc` is default - `sortBy` required to use it
     "limit": 2, // limit numer of returned items
     "page": 1, // page number
     "perPage": 100, // numer of items per page
@@ -109,16 +109,39 @@ To get `home` entity send request to `/entity?name=home`.
 ### `/collection`
 Retrieve the whole collection as array.
 
-**Example:**
-To get `blog`collection send request to `/collection?name=blog`
+**Examples:**
+#### Whole collection
+```
+/collection?name=blog
+```
+
+#### Whole collection, but only title and content
+```
+/collection?name=blog&props=title,title
+```
+
+#### Only items selected by ID
+```
+/collection?name=blog&items=why-wombat-poop-is-cube,things-you-dont-know-about-wombats
+```
+
+#### Two items from collection sorted by title descending
+```
+/collection?name=blog&limit=2&sortBy=title&sort=desc
+```
+
+#### Items from second page, up to five per page
+```
+/collection?name=blog&page=2&perPage=5
+```
 
 **URL params:**
 - `name` - (required) Name of collection.
 - `lang` - Return content in given lang.
 - `sortBy` - Prop name used for sorting.
-- `sort` - `desc` is default - `sortBy` required to use it.
+- `sort` - `asc` is default - `sortBy` required to use it.
 - `limit` - Limit numer of returned items.
 - `page` - Page number.
 - `perPage` - Numer of items per page.
-- `items` - Array of collection items IDs. Items order is preserved.
-- `props` - Returns only selected object props, GraphQL-like.
+- `items` - Comma separated list of collection items IDs. Items order is preserved.
+- `props` - Comma separated list of selected object props, GraphQL-like.

@@ -1,15 +1,23 @@
 const { parse } = require('url')
 const config = require('../config')
 const getCollection = require('../get-collection')
+const cors = require('./cors')
 
 module.exports = content => (request, response) => {
   const params = parse(request.url, true).query
   const lang = params.lang || config.defaultLang
 
+  // Transform comma separated strings lists to arrays
+  Object.keys(params)
+    .filter(key => key === 'items' || key === 'props')
+    .forEach(key => params[key] = params[key].split(','))
+
   try {
     const collection = getCollection(content, lang, params)
 
     if (!collection.items) throw new Error('Collection not found')
+
+    cors(request, response)
 
     if (collection.pagination) {
       response.setHeader('X-Wombat-Total', collection.pagination.total)
