@@ -17,7 +17,7 @@ portfinder.basePort = config.port
 module.exports = async () => {
 
   // Prepare content
-  if (config.buildContent) {
+  if (config.dev.build) {
     await build()
   }
 

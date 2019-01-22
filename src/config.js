@@ -11,8 +11,11 @@ if (fs.existsSync(configPath)) {
 
 const defaults = {
   defaultLang: 'en',
-  port: 3000,
-  buildContent: true
+  allowedOrigins: [],
+  dev: {
+    port: 3000,
+    build: true
+  }
 }
 
 module.exports = Object.assign({}, defaults, config)
