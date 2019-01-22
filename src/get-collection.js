@@ -15,8 +15,7 @@ module.exports = (content, lang, query) => {
 
   // Get selected items by ID
   if (query.items) {
-    const itemIds = toArray(query.items).map(item => camelCase(item))
-    items = itemIds.map(item => collection[item])
+    items = query.items.map(item => collection[camelCase(item)])
   }
   else {
     // Convert whole collection to array
@@ -27,7 +26,7 @@ module.exports = (content, lang, query) => {
   if (query.sortBy) {
     items = sortBy(items, query.sortBy)
 
-    if (query.sort === 'asc') {
+    if (query.sort === 'desc') {
       items = items.reverse()
     }
   }

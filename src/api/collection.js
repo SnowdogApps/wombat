@@ -7,6 +7,11 @@ module.exports = content => (request, response) => {
   const params = parse(request.url, true).query
   const lang = params.lang || config.defaultLang
 
+  // Transform comma separated strings lists to arrays
+  Object.keys(params)
+    .filter(key => key === 'items' || key === 'props')
+    .forEach(key => params[key] = params[key].split(','))
+
   try {
     const collection = getCollection(content, lang, params)
 
