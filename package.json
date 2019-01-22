@@ -17,10 +17,12 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "eslint **/*.js",
-    "build": "./bin/wombat.js build",
     "dev": "./bin/wombat.js dev",
-    "test": "jest --watchAll"
+    "build": "./bin/wombat.js build",
+    "build-mocks": "node tests/mocks/build",
+    "test": "yarn build-mocks && jest",
+    "test-dev": "yarn build-mocks && jest --watchAll",
+    "lint": "eslint **/*.js"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",

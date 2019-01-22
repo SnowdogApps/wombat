@@ -1,6 +1,6 @@
 
-const getEntity = require('../get-entity')
-const content = require('../../db.json')
+const getEntity = require('../../src/get-entity')
+const content = require('../mocks/db.json')
 
 const lang = 'en'
 const name = 'home'

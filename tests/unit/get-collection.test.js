@@ -1,9 +1,9 @@
-const getCollection = require('../get-collection')
-const content = require('../../db.json')
+const getCollection = require('../../src/get-collection')
+const content = require('../mocks/db.json')
 
 const lang = 'en'
 const defaultQuery = {
-  name: 'post'
+  name: 'home-about'
 }
 
 describe('fetches a collection', () => {
@@ -21,19 +21,25 @@ describe('fetches a collection', () => {
     expect(items.length).toBe(3)
   })
 
-  it('checks that collections are sorted by asc order', () => {
+  it('checks that collections are sorted in default order (desc)', () => {
     const query = {
       ...defaultQuery,
-      sortBy: "content.title",
-      sort: "asc"
+      sortBy: "title"
     }
+
     const { items } = getCollection(content, lang, query)
-    expect(items[0].content.title).toBe('Tech newsletters vs lack of time')
+    expect(items[0].title).toBe('Aaa')
   })
 
-  it('checks that collections are sorted in default order (desc)', () => {
-    const { items } = getCollection(content, lang, defaultQuery)
-    expect(items[0].content.title).toBe('Front-end news summary #1')
+  it('checks that collections are sorted by desc order', () => {
+    const query = {
+      ...defaultQuery,
+      sortBy: "title",
+      sort: "desc"
+    }
+
+    const { items } = getCollection(content, lang, query)
+    expect(items[0].title).toBe('Ccc')
   })
 
   it('checks collection pagination works', () => {
@@ -54,8 +60,8 @@ describe('fetches a collection', () => {
     }
 
     const pagination = {
-      total: 6,
-      totalPages: 3
+      total: 3,
+      totalPages: 2
     }
     const collection = getCollection(content, lang, query)
     expect(typeof collection.pagination).toBe('object')
