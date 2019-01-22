@@ -17,19 +17,26 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "eslint **/*.js",
+    "dev": "./bin/wombat.js dev",
     "build": "./bin/wombat.js build",
-    "dev": "./bin/wombat.js dev"
+    "build-mocks": "node tests/mocks/build",
+    "test": "yarn build-mocks && jest",
+    "test-dev": "yarn build-mocks && jest --watchAll",
+    "lint": "eslint **/*.js"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
-    "lodash": "^4.17.11",
+    "lodash.camelcase": "^4.3.0",
     "lodash.defaultsdeep": "^4.6.0",
+    "lodash.pick": "^4.4.0",
+    "lodash.sortby": "^4.7.0",
+    "lodash.toarray": "^4.4.0",
     "portfinder": "^1.0.20",
     "showdown": "^1.9.0"
   },
   "devDependencies": {
-    "eslint": "^5.9.0"
+    "eslint": "^5.12.0",
+    "jest": "^23.6.0"
   },
   "engines": {
     "node": ">=8.9.0",

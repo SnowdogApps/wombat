@@ -1,0 +1,6 @@
+{
+  "query": {
+    "name": "homeAbout",
+    "items": ["award", "about", "partner"]
+  }
+}

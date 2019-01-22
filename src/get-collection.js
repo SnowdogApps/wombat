@@ -1,7 +1,7 @@
-const toArray = require('lodash/toArray')
-const sortBy = require('lodash/sortBy')
-const camelCase = require('lodash/camelCase')
-const pick = require('lodash/pick')
+const toArray = require('lodash.toarray')
+const sortBy = require('lodash.sortby')
+const camelCase = require('lodash.camelcase')
+const pick = require('lodash.pick')
 
 module.exports = (content, lang, query) => {
   const name = camelCase(query.name)
