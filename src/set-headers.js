@@ -2,17 +2,12 @@ const config = require('./config')
 
 module.exports = (request, response, isDev = false) => {
   const origin = request.headers.origin
-  let allowedOrigins = []
-
-  if (config.allowedOrigins) {
-    allowedOrigins = config.allowedOrigins
-  }
+  const allowedOrigins = config.allowedOrigins || []
   
-  if (isDev)
-  {
+  if (isDev) {
     response.setHeader('Access-Control-Allow-Origin', '*')
   }
-  else if (allowedOrigins.indexOf(origin) > -1) {
+  else if (allowedOrigins.includes(origin)) {
     response.setHeader('Access-Control-Allow-Origin', origin)
   }
 
