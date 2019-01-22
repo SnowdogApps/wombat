@@ -6,24 +6,19 @@ const fs = require('fs-extra')
 const config = require('./config')
 const build = require('./build')
 const getContent = require('./get-content')
-const setHeaders = require('./set-headers')
+
+const cors = require('./api/cors')
+const entityRequestHandler = require('./api/entity')
+const collectionRequestHandler = require('./api/collection')
 
 module.exports = async () => {
-  const entityRequestHandler = require('./api/entity')
-  const collectionRequestHandler = require('./api/collection')
 
   // Prepare content
   await build()
   const content = await getContent()
 
   const server = http.createServer((request, response) => {
-    setHeaders(request, response, true)
-
-    if (request.method === 'OPTIONS') {
-      response.statusCode = 204
-      response.end()
-      return
-    }
+    cors(request, response, true)
 
     const pathName = url.parse(request.url).pathname
 
