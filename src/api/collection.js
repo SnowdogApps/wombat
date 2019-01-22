@@ -3,7 +3,7 @@ const config = require('../config')
 const getCollection = require('../get-collection')
 const cors = require('./cors')
 
-module.exports = content => (request, response) => {
+module.exports = content => (request, response, dev = false) => {
   const params = parse(request.url, true).query
   const lang = params.lang || config.defaultLang
 
@@ -17,7 +17,7 @@ module.exports = content => (request, response) => {
 
     if (!collection.items) throw new Error('Collection not found')
 
-    cors(request, response)
+    cors(request, response, dev)
 
     if (collection.pagination) {
       response.setHeader('X-Wombat-Total', collection.pagination.total)

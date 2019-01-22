@@ -23,16 +23,14 @@ module.exports = async () => {
   const content = getContent()
 
   const server = http.createServer((request, response) => {
-    cors(request, response, true)
-
     const pathName = url.parse(request.url).pathname
 
     if (pathName === '/entity') {
-      entityRequestHandler(content)(request, response)
+      entityRequestHandler(content)(request, response, true)
       response.end()
     }
     else if (pathName === '/collection') {
-      collectionRequestHandler(content)(request, response)
+      collectionRequestHandler(content)(request, response, true)
       response.end()
     }
     else if (/^\/static\//.test(pathName)) {
