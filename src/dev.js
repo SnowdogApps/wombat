@@ -12,13 +12,15 @@ const cors = require('./api/cors')
 const entityRequestHandler = require('./api/entity')
 const collectionRequestHandler = require('./api/collection')
 
-portfinder.basePort = config.port
+portfinder.basePort = config.dev.port
 
 module.exports = async () => {
-
   // Prepare content
-  await build()
-  const content = await getContent()
+  if (config.dev.build) {
+    await build()
+  }
+
+  const content = getContent()
 
   const server = http.createServer((request, response) => {
     cors(request, response, true)
