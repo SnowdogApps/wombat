@@ -15,13 +15,12 @@ const collectionRequestHandler = require('./api/collection')
 portfinder.basePort = config.dev.port
 
 module.exports = async () => {
-
   // Prepare content
   if (config.dev.build) {
     await build()
   }
 
-  const content = await getContent()
+  const content = getContent()
 
   const server = http.createServer((request, response) => {
     cors(request, response, true)
