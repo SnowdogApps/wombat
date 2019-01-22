@@ -2,14 +2,19 @@ const http = require('http')
 const url = require('url')
 const path = require('path')
 const fs = require('fs-extra')
+const portfinder = require('portfinder')
 
 const config = require('./config')
 const build = require('./build')
 const getContent = require('./get-content')
 
+const cors = require('./api/cors')
+const entityRequestHandler = require('./api/entity')
+const collectionRequestHandler = require('./api/collection')
+
+portfinder.basePort = config.port
+
 module.exports = async () => {
-  const entityRequestHandler = require('./api/entity')
-  const collectionRequestHandler = require('./api/collection')
 
   // Prepare content
   if (config.buildContent) {
@@ -19,16 +24,7 @@ module.exports = async () => {
   const content = await getContent()
 
   const server = http.createServer((request, response) => {
-    response.setHeader('Access-Control-Allow-Origin', '*')
-    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET')
-    response.setHeader('Access-Control-Expose-Headers', 'X-Wombat-Total, X-Wombat-TotalPages')
-    response.setHeader('Access-Control-Max-Age', 2592000)
-
-    if (request.method === 'OPTIONS') {
-      response.statusCode = 204
-      response.end()
-      return
-    }
+    cors(request, response, true)
 
     const pathName = url.parse(request.url).pathname
 
@@ -59,6 +55,11 @@ module.exports = async () => {
     }
   })
 
-  server.listen(config.port)
-  console.log(`Wombat is listening on port ${config.port}!`)
+  try {
+    const port = await portfinder.getPortPromise()
+    server.listen(port)
+    console.log(`Wombat is listening on port ${port}!`)
+  } catch(e) {
+    throw new Error(e)
+  }
 }
