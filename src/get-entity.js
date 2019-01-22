@@ -1,4 +1,4 @@
-const camelCase = require('lodash/camelCase')
+const camelCase = require('lodash.camelcase')
 
 const getCollection = require('./get-collection')
 
