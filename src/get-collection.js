@@ -1,7 +1,7 @@
-const toArray = require('lodash/toArray')
-const sortBy = require('lodash/sortBy')
-const camelCase = require('lodash/camelCase')
-const pick = require('lodash/pick')
+const toArray = require('lodash.toarray')
+const sortBy = require('lodash.sortby')
+const camelCase = require('lodash.camelcase')
+const pick = require('lodash.pick')
 
 module.exports = (content, lang, query) => {
   const name = camelCase(query.name)
@@ -26,7 +26,7 @@ module.exports = (content, lang, query) => {
   if (query.sortBy) {
     items = sortBy(items, query.sortBy)
 
-    if (query.sort === 'asc') {
+    if (query.sort === 'desc') {
       items = items.reverse()
     }
   }

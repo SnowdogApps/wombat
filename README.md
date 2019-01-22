@@ -36,8 +36,16 @@ This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builde
 4. Deploy your app via `now`
 
 ## Config options
-* `defaultLang` (default `en`) - Fallback language when request is send without `lang` query param.
-* `port` (default `3000`, only for development purpouses) Port used by the web server to listen for requests.
+```js
+{
+  "defaultLang": "en", // Fallback language when request is send without `lang` query param.
+  "allowedOrigins": [], // List of domains used to set Access-Control-Allow-Origin (CORS) response header
+  "dev": {
+    "port": "3000", // Port used by the dev web server to listen for requests
+    "build": true // Determines if new "database" file should be build from files before dev server will be started.
+  }
+}
+```
 
 ## Content structure
 All content is kept in `/content` directory.
@@ -64,7 +72,7 @@ Create new JSON file inside entity directory to define relation:
   "query": {
     "name": "collectionName", // (required) collection name
     "sortBy": "title", // prop name used for sorting
-    "sort": "asc", // `desc` is default - `sortBy` required to use it
+    "sort": "desc", // `asc` is default - `sortBy` required to use it
     "limit": 2, // limit numer of returned items
     "page": 1, // page number
     "perPage": 100, // numer of items per page
@@ -139,7 +147,7 @@ Retrieve the whole collection as array.
 - `name` - (required) Name of collection.
 - `lang` - Return content in given lang.
 - `sortBy` - Prop name used for sorting.
-- `sort` - `desc` is default - `sortBy` required to use it.
+- `sort` - `asc` is default - `sortBy` required to use it.
 - `limit` - Limit numer of returned items.
 - `page` - Page number.
 - `perPage` - Numer of items per page.
