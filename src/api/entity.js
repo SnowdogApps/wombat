@@ -1,9 +1,8 @@
 const { parse } = require('url')
-const config = require('../config')
 const getEntity = require('../get-entity')
 const cors = require('./cors')
 
-module.exports = content => (request, response) => {
+module.exports = (content, config) => (request, response, dev = false) => {
   const params = parse(request.url, true).query
   const name = params.name
   const lang = params.lang || config.defaultLang
@@ -11,7 +10,7 @@ module.exports = content => (request, response) => {
   try {
     const entity = getEntity(content, lang, name)
 
-    cors(request, response)
+    cors(request, response, config, dev)
 
     if (!entity) throw new Error('Entity not found')
     response.end(JSON.stringify(entity))

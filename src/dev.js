@@ -4,17 +4,25 @@ const path = require('path')
 const fs = require('fs-extra')
 const portfinder = require('portfinder')
 
-const config = require('./config')
 const build = require('./build')
+const getConfig = require('./get-config')
 const getContent = require('./get-content')
 
-const cors = require('./api/cors')
 const entityRequestHandler = require('./api/entity')
 const collectionRequestHandler = require('./api/collection')
 
-portfinder.basePort = config.dev.port
 
 module.exports = async () => {
+  // Prepare config
+  const localConfigPath = path.resolve('./config.json')
+
+  let localConfig = {}
+  if (fs.existsSync(localConfigPath)) {
+    localConfig = require(localConfigPath)
+  }
+
+  const config = getConfig(localConfig)
+
   // Prepare content
   if (config.dev.build) {
     await build()
@@ -22,17 +30,16 @@ module.exports = async () => {
 
   const content = getContent()
 
+  // Start server
   const server = http.createServer((request, response) => {
-    cors(request, response, true)
-
     const pathName = url.parse(request.url).pathname
 
     if (pathName === '/entity') {
-      entityRequestHandler(content)(request, response)
+      entityRequestHandler(content, config)(request, response, true)
       response.end()
     }
     else if (pathName === '/collection') {
-      collectionRequestHandler(content)(request, response)
+      collectionRequestHandler(content, config)(request, response, true)
       response.end()
     }
     else if (/^\/static\//.test(pathName)) {
@@ -55,6 +62,7 @@ module.exports = async () => {
   })
 
   try {
+    portfinder.basePort = config.dev.port
     const port = await portfinder.getPortPromise()
     server.listen(port)
     console.log(`Wombat is listening on port ${port}!`)
