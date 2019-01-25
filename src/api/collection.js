@@ -23,8 +23,7 @@ module.exports = (content, config) => (request, response, dev = false) => {
       response.setHeader('X-Wombat-TotalPages', collection.pagination.totalPages)
     }
 
-    response.end(JSON.stringify(config))
-    // response.end(JSON.stringify(collection.items))
+    response.end(JSON.stringify(collection.items))
   }
   catch (e) {
     console.error(e)
