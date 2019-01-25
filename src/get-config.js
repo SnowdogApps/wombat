@@ -12,4 +12,3 @@ const defaults = {
 module.exports = (config = {}) => {
   return defaultsDeep(config, defaults)
 }
-
