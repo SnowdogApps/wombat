@@ -1,8 +1,10 @@
 const { parse } = require('url')
+const getConfing = require('../get-config')
 const getEntity = require('../get-entity')
 const cors = require('./cors')
 
 module.exports = (content, config) => (request, response, dev = false) => {
+  config = getConfing(config)
   const params = parse(request.url, true).query
   const name = params.name
   const lang = params.lang || config.defaultLang
