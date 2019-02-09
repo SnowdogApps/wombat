@@ -2,6 +2,7 @@ const toArray = require('lodash.toarray')
 const sortBy = require('lodash.sortby')
 const camelCase = require('lodash.camelcase')
 const pick = require('lodash.pick')
+const shuffle = require('lodash.shuffle')
 
 module.exports = (content, lang, query) => {
   const name = camelCase(query.name)
@@ -24,7 +25,10 @@ module.exports = (content, lang, query) => {
     if (query.sort === 'desc') {
       items = items.reverse()
     }
-  }
+
+    if (query.sort === 'shuffle') {
+      items = shuffle(items)
+    }
 
   if (query.limit) {
     items = items.splice(0, query.limit)
