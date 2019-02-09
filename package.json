@@ -29,8 +29,10 @@
     "lodash.camelcase": "^4.3.0",
     "lodash.defaultsdeep": "^4.6.0",
     "lodash.pick": "^4.4.0",
+    "lodash.reverse": "^4.0.1",
     "lodash.shuffle": "^4.2.0",
     "lodash.sortby": "^4.7.0",
+    "lodash.take": "^4.1.1",
     "lodash.toarray": "^4.4.0",
     "portfinder": "^1.0.20",
     "showdown": "^1.9.0"
