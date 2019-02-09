@@ -27,10 +27,10 @@ module.exports = (content, lang, query) => {
     if (query.sort === 'desc') {
       items = reverse(items)
     }
+  }
 
-    if (query.sort === 'shuffle') {
-      items = shuffle(items)
-    }
+  if (query.shuffle === 'true') {
+    items = shuffle(items)
   }
 
   if (query.limit) {
