@@ -5,6 +5,8 @@ const pick = require('lodash.pick')
 const shuffle = require('lodash.shuffle')
 const reverse = require('lodash.reverse')
 const take = require('lodash.take')
+const inRange = require('lodash.inrange')
+const toNumber = require('lodash.tonumber')
 
 module.exports = (content, lang, query) => {
   const name = camelCase(query.name)
@@ -18,6 +20,34 @@ module.exports = (content, lang, query) => {
   else {
     // Convert whole collection to array
     items = toArray(collection)
+  }
+
+  if (query.inRange) {
+    if (query.inRange.type === 'date') {
+      if (!query.inRange.end) {
+        throw new Error('You need to define dates range')
+      }
+
+      const start = new Date(query.inRange.start || 0)
+      const end = new Date(query.inRange.end)
+
+      items = items.filter(item => inRange(
+        new Date(item[query.inRange.prop]),
+        start,
+        end
+      ))
+    }
+
+    if (query.inRange.type === 'number' || !query.inRange.type) {
+      const start = toNumber(query.inRange.start || 0)
+      const end = toNumber(query.inRange.end || Infinity)
+
+      items = items.filter(item => inRange(
+        toNumber(item[query.inRange.prop]),
+        start,
+        end
+      ))
+    }
   }
 
   // Sort by prop
