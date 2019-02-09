@@ -8,11 +8,6 @@ module.exports = (content, lang, query) => {
   const collection = content[lang]['collection'][name]
   let items = []
 
-  // Move object ID inside element
-  Object.keys(collection).forEach(id => {
-    collection[id].id = id
-  })
-
   // Get selected items by ID
   if (query.items) {
     items = query.items.map(item => collection[camelCase(item)])
