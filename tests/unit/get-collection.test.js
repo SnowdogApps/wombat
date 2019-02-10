@@ -77,4 +77,137 @@ describe('fetches a collection', () => {
     expect(Array.isArray(items)).toBe(true)
     expect(items).not.toBe(null)
   })
+
+  it('get items with dates in range', () => {
+    // Dates range
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'date',
+            type: 'date',
+            start: '2019-03-09',
+            end: '2019-03-11'
+          }
+        }
+      ).items.length
+    ).toBe(1)
+
+    // Up to date
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'date',
+            type: 'date',
+            end: '2019-03-11'
+          }
+        }
+      ).items.length
+    ).toBe(2)
+
+    // From date
+    expect(
+      () => getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'date',
+            type: 'date',
+            start: '2019-03-15'
+          }
+        }
+      )
+    ).toThrowError(new Error('You need to define dates range'))
+
+    // Dates without type
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'date',
+            start: '2019-03-09',
+            end: '2019-03-11'
+          }
+        }
+      ).items.length
+    ).toBe(0)
+  })
+
+
+  it('get items with numbers in range', () => {
+    // Numbers range
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'commentsCount',
+            start: '20',
+            end: '30'
+          }
+        }
+      ).items.length
+    ).toBe(1)
+
+    // Numbers range with defined type
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            type: 'number',
+            prop: 'commentsCount',
+            start: '20',
+            end: '30'
+          }
+        }
+      ).items.length
+    ).toBe(1)
+
+    // Numbers up to
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'commentsCount',
+            end: '30'
+          }
+        }
+      ).items.length
+    ).toBe(1)
+
+    // Numbers starting from
+    expect(
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          range: {
+            prop: 'commentsCount',
+            start: '30'
+          }
+        }
+      ).items.length
+    ).toBe(2)
+  })
 })

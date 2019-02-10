@@ -2,24 +2,52 @@ const toArray = require('lodash.toarray')
 const sortBy = require('lodash.sortby')
 const camelCase = require('lodash.camelcase')
 const pick = require('lodash.pick')
+const shuffle = require('lodash.shuffle')
+const reverse = require('lodash.reverse')
+const take = require('lodash.take')
+const inRange = require('lodash.inrange')
+const toNumber = require('lodash.tonumber')
 
 module.exports = (content, lang, query) => {
   const name = camelCase(query.name)
   const collection = content[lang]['collection'][name]
   let items = []
 
-  // Move object ID inside element
-  Object.keys(collection).forEach(id => {
-    collection[id].id = id
-  })
-
   // Get selected items by ID
   if (query.items) {
-    items = query.items.map(item => collection[camelCase(item)])
+    items = pick(collection, query.items)
   }
   else {
     // Convert whole collection to array
     items = toArray(collection)
+  }
+
+  if (query.range) {
+    if (query.range.type === 'date') {
+      if (!query.range.end) {
+        throw new Error('You need to define dates range')
+      }
+
+      const start = new Date(query.range.start || 0)
+      const end = new Date(query.range.end)
+
+      items = items.filter(item => inRange(
+        new Date(item[query.range.prop]),
+        start,
+        end
+      ))
+    }
+
+    if (query.range.type === 'number' || !query.range.type) {
+      const start = toNumber(query.range.start || 0)
+      const end = toNumber(query.range.end || Infinity)
+
+      items = items.filter(item => inRange(
+        toNumber(item[query.range.prop]),
+        start,
+        end
+      ))
+    }
   }
 
   // Sort by prop
@@ -27,32 +55,38 @@ module.exports = (content, lang, query) => {
     items = sortBy(items, query.sortBy)
 
     if (query.sort === 'desc') {
-      items = items.reverse()
+      items = reverse(items)
     }
   }
 
-  if (query.limit) {
-    items = items.splice(0, query.limit)
+  if (query.shuffle === 'true') {
+    items = shuffle(items)
   }
 
-  const pagination = query.page && query.perPage ? {
-    total: items.length,
-    totalPages: Math.ceil(items.length / query.perPage)
-  } : false
+  if (query.limit) {
+    items = take(items, query.limit)
+  }
+
+  // Pagination
+  let pagination = false
 
   if (query.page && query.perPage) {
-    const start = (query.page - 1) * query.perPage
-    items = items.splice(start, query.perPage)
+    // Set totals
+    pagination = {
+      total: items.length,
+      totalPages: Math.ceil(items.length / query.perPage)
+    }
+
+    // Pick only items from current page
+    items = items.splice(
+      (query.page - 1) * query.perPage,
+      query.perPage
+    )
   }
 
+  // Return only selected object properties
   if (query.props) {
-    items = items.map(item => {
-      return pick(item, query.props)
-    })
-  }
-
-  if (!items.length) {
-    return null
+    items = items.map(item => pick(item, query.props))
   }
 
   return {

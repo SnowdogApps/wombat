@@ -1,6 +1,6 @@
 {
   "name": "@snowdog/wombat",
-  "version": "1.0.0-alpha.20",
+  "version": "1.0.0-alpha.21",
   "description": "File based, headless CMS for building configurable API",
   "repository": {
     "type": "git",
@@ -28,9 +28,14 @@
     "fs-extra": "^7.0.1",
     "lodash.camelcase": "^4.3.0",
     "lodash.defaultsdeep": "^4.6.0",
+    "lodash.inrange": "^3.3.6",
     "lodash.pick": "^4.4.0",
+    "lodash.reverse": "^4.0.1",
+    "lodash.shuffle": "^4.2.0",
     "lodash.sortby": "^4.7.0",
+    "lodash.take": "^4.1.1",
     "lodash.toarray": "^4.4.0",
+    "lodash.tonumber": "^4.0.3",
     "portfinder": "^1.0.20",
     "showdown": "^1.9.0"
   },

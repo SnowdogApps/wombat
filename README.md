@@ -66,19 +66,27 @@ Created to keep a single object like a landing page content or global configurat
 - Every property of entity needs to be a separate JSON or Markdown file.
 - You can define the relation between entity and collection.
 
-### How to define a relation between entity and collection?
-Create new JSON file inside entity directory to define relation:
+### The Query object
+The core of Wombat. It's the key to get data from collection and to supply entities with colection data.
+
 ```js
 {
   "query": {
     "name": "collectionName", // (required) collection name
     "sortBy": "title", // prop name used for sorting
-    "sort": "desc", // `asc` is default - `sortBy` required to use it
+    "sort": "desc", // `asc` (default), `desc` or `shuffle` - `sortBy` required to use it
+    "shuffle": true, // Shuffle returned items
     "limit": 2, // limit numer of returned items
     "page": 1, // page number
     "perPage": 100, // numer of items per page
     "items": ["award", "about", "partner"], // Array of collection items IDs. Items order is preserved.
     "props": ["id", "content"] // return only selected object props
+    "range": {
+      "prop": "published", // name of collection item property used to get range
+      "type": "date", // `number` (default) or `date - type of the prop
+      "start": "2019-01-01", // range start
+      "end": "2019-03-01" // range end
+    }
   }
 }
 ```
@@ -148,9 +156,11 @@ Retrieve the whole collection as array.
 - `name` - (required) Name of collection.
 - `lang` - Return content in given lang.
 - `sortBy` - Prop name used for sorting.
-- `sort` - `asc` is default - `sortBy` required to use it.
+- `sort` - `asc` (default) or `desc`- `sortBy` required to use it.
+- `shuffle` - Shuffle returned items.
 - `limit` - Limit numer of returned items.
 - `page` - Page number.
 - `perPage` - Numer of items per page.
 - `items` - Comma separated list of collection items IDs. Items order is preserved.
 - `props` - Comma separated list of selected object props, GraphQL-like.
+- `range` - Range config in form of stringified JSON object
