@@ -22,28 +22,28 @@ module.exports = (content, lang, query) => {
     items = toArray(collection)
   }
 
-  if (query.inRange) {
-    if (query.inRange.type === 'date') {
-      if (!query.inRange.end) {
+  if (query.range) {
+    if (query.range.type === 'date') {
+      if (!query.range.end) {
         throw new Error('You need to define dates range')
       }
 
-      const start = new Date(query.inRange.start || 0)
-      const end = new Date(query.inRange.end)
+      const start = new Date(query.range.start || 0)
+      const end = new Date(query.range.end)
 
       items = items.filter(item => inRange(
-        new Date(item[query.inRange.prop]),
+        new Date(item[query.range.prop]),
         start,
         end
       ))
     }
 
-    if (query.inRange.type === 'number' || !query.inRange.type) {
-      const start = toNumber(query.inRange.start || 0)
-      const end = toNumber(query.inRange.end || Infinity)
+    if (query.range.type === 'number' || !query.range.type) {
+      const start = toNumber(query.range.start || 0)
+      const end = toNumber(query.range.end || Infinity)
 
       items = items.filter(item => inRange(
-        toNumber(item[query.inRange.prop]),
+        toNumber(item[query.range.prop]),
         start,
         end
       ))

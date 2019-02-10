@@ -86,7 +86,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'date',
             type: 'date',
             start: '2019-03-09',
@@ -103,7 +103,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'date',
             type: 'date',
             end: '2019-03-11'
@@ -119,7 +119,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'date',
             type: 'date',
             start: '2019-03-15'
@@ -135,7 +135,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'date',
             start: '2019-03-09',
             end: '2019-03-11'
@@ -154,7 +154,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'commentsCount',
             start: '20',
             end: '30'
@@ -170,7 +170,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             type: 'number',
             prop: 'commentsCount',
             start: '20',
@@ -187,7 +187,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'commentsCount',
             end: '30'
           }
@@ -202,7 +202,7 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          inRange: {
+          range: {
             prop: 'commentsCount',
             start: '30'
           }
