@@ -13,6 +13,11 @@ module.exports = (content, config) => (request, response, dev = false) => {
     .filter(key => key === 'items' || key === 'props')
     .forEach(key => params[key] = params[key].split(','))
 
+  // Parse JSON
+  Object.keys(params)
+    .filter(key => key === 'range')
+    .forEach(key => params[key] = JSON.parse(params[key]))
+
   try {
     const collection = getCollection(content, lang, params)
 
