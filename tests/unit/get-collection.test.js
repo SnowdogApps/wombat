@@ -141,8 +141,8 @@ describe('fetches a collection', () => {
             end: '2019-03-11'
           }
         }
-      )
-    ).toBe(null)
+      ).items.length
+    ).toBe(0)
   })
 
 
