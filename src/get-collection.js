@@ -89,10 +89,6 @@ module.exports = (content, lang, query) => {
     items = items.map(item => pick(item, query.props))
   }
 
-  if (!items.length) {
-    return null
-  }
-
   return {
     items,
     pagination

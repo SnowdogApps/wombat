@@ -16,8 +16,6 @@ module.exports = (content, config) => (request, response, dev = false) => {
   try {
     const collection = getCollection(content, lang, params)
 
-    if (!collection.items) throw new Error('Collection not found')
-
     cors(request, response, config, dev)
 
     if (collection.pagination) {
