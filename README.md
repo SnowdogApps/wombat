@@ -66,8 +66,9 @@ Created to keep a single object like a landing page content or global configurat
 - Every property of entity needs to be a separate JSON or Markdown file.
 - You can define the relation between entity and collection.
 
-### How to define a relation between entity and collection?
-Create new JSON file inside entity directory to define relation:
+### The Query object
+The core of Wombat. It's the key to get data from collection and to supply entities with colection data.
+
 ```js
 {
   "query": {
@@ -80,6 +81,12 @@ Create new JSON file inside entity directory to define relation:
     "perPage": 100, // numer of items per page
     "items": ["award", "about", "partner"], // Array of collection items IDs. Items order is preserved.
     "props": ["id", "content"] // return only selected object props
+    "range": {
+      "prop": "published", // name of collection item property used to get range
+      "type": "date", // `number` (default) or `date - type of the prop
+      "start": "2019-01-01", // range start
+      "end": "2019-03-01" // range end
+    }
   }
 }
 ```
@@ -156,3 +163,4 @@ Retrieve the whole collection as array.
 - `perPage` - Numer of items per page.
 - `items` - Comma separated list of collection items IDs. Items order is preserved.
 - `props` - Comma separated list of selected object props, GraphQL-like.
+- `range` - Range config in form of stringified JSON object
