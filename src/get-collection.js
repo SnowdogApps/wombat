@@ -13,9 +13,12 @@ module.exports = (content, lang, query) => {
   const collection = content[lang]['collection'][name]
   let items = []
 
-  // Get selected items by ID
   if (query.items) {
+    // Get selected items by ID
     items = pick(collection, query.items)
+
+    // Convert to array
+    items = toArray(items)
   }
   else {
     // Convert whole collection to array
