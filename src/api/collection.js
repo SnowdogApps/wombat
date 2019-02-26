@@ -1,4 +1,5 @@
 const { parse } = require('url')
+const camelCase = require('lodash.camelcase')
 const getConfing = require('../get-config')
 const getCollection = require('../get-collection')
 const cors = require('./cors')
@@ -11,7 +12,7 @@ module.exports = (content, config) => (request, response, dev = false) => {
   // Transform comma separated strings lists to arrays
   Object.keys(params)
     .filter(key => key === 'items' || key === 'props')
-    .forEach(key => params[key] = params[key].split(','))
+    .forEach(key => params[key] = params[key].split(',').map(key => camelCase(key)))
 
   // Parse JSON
   Object.keys(params)

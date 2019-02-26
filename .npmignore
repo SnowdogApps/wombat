@@ -1,3 +1,5 @@
-/examples
+/.circleci
 /assets
+/content
+/examples
 /tests
