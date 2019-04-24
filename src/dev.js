@@ -6,15 +6,13 @@ const portfinder = require('portfinder')
 
 const build = require('./build')
 const getConfig = require('./get-config')
-const getContent = require('./get-content')
 
 const entityRequestHandler = require('./api/entity')
 const collectionRequestHandler = require('./api/collection')
 
-
 module.exports = async () => {
   // Prepare config
-  const localConfigPath = path.resolve('./config.json')
+  const localConfigPath = path.resolve('./wombat.config.json')
 
   let localConfig = {}
   if (fs.existsSync(localConfigPath)) {
@@ -28,7 +26,7 @@ module.exports = async () => {
     await build()
   }
 
-  const content = getContent()
+  const content = require(path.resolve(config.dest))
 
   // Start server
   const server = http.createServer((request, response) => {

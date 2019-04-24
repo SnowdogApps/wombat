@@ -1,7 +1,7 @@
 const { parse } = require('url')
 const getConfing = require('../get-config')
 const getEntity = require('../get-entity')
-const cors = require('./cors')
+const cors = require('../cors')
 
 module.exports = (content, config) => (request, response, dev = false) => {
   config = getConfing(config)

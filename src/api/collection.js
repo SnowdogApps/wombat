@@ -2,7 +2,7 @@ const { parse } = require('url')
 const camelCase = require('lodash.camelcase')
 const getConfing = require('../get-config')
 const getCollection = require('../get-collection')
-const cors = require('./cors')
+const cors = require('../cors')
 
 module.exports = (content, config) => (request, response, dev = false) => {
   config = getConfing(config)

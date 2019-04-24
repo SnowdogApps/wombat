@@ -1,5 +1,5 @@
 const getCollection = require('../../src/get-collection')
-const content = require('../mocks/db.json')
+const content = require('../mocks/wombat.db.json')
 
 const lang = 'en'
 const defaultQuery = {

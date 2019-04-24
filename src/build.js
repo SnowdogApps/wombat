@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const camelCase = require('lodash.camelcase')
 const showdown = require('showdown')
 const converter = new showdown.Converter()
+const getConfig = require('./get-config')
 
 const walk = async dir => {
   dir = path.resolve(dir)
@@ -37,16 +38,20 @@ const walk = async dir => {
   return tree
 }
 
-module.exports = async (src = './content', dest = './db.json') => {
+module.exports = async (config = {}, content) => {
   console.log('Building...')
-  const dbPath = path.resolve(dest)
+  config = getConfig(config)
+  const dbPath = path.resolve(config.dest)
 
   // Remove old database
   if (await fs.pathExists(dbPath)) {
     await fs.remove(dbPath)
   }
 
-  const content = await walk(src)
+  if (!content) {
+    content = await walk(config.src)
+  }
+
   await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
 
   console.log('Build finished!')

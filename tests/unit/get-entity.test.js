@@ -1,6 +1,6 @@
 
 const getEntity = require('../../src/get-entity')
-const content = require('../mocks/db.json')
+const content = require('../mocks/wombat.db.json')
 
 const lang = 'en'
 const name = 'home'
