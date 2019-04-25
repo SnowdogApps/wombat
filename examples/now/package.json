@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "wombat build",
+    "now-build": "wombat build",
     "dev": "wombat dev"
   },
   "dependencies": {

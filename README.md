@@ -28,7 +28,7 @@ This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builde
 1. In `package.json` add automatic DB building after installing dependecies
    ```
     "scripts": {
-      "postinstall": "wombat build",
+      "now-build": "wombat build",
       "dev": "wombat dev"
     }
    ```
