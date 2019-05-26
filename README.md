@@ -18,7 +18,7 @@ Simple open-source flat-file serverless Content Management Framework (headless-C
 ## Setup
 1. Add Wombat as dependecy `yarn add @snowdog/wombat`
 2. Create content following [Content structure](#content-structure) description.
-3. Create `config.json` file. Can be just `{}` if you are okay with default setting.
+3. Create `wombat.config.json` file. Can be just `{}` if you are okay with default setting.
 4. Add `"dev": "wombat dev"` to `package.json` scripts section
 5. Run `yarn dev` and enjoy working with your new API
 
