@@ -22,6 +22,8 @@ module.exports = (content, config) => (request, response, dev = false) => {
   try {
     const collection = getCollection(content, lang, params)
 
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+
     cors(request, response, config, dev)
 
     if (collection.pagination) {
