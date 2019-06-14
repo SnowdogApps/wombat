@@ -4,7 +4,7 @@ const getConfing = require('../get-config')
 const getCollection = require('../get-collection')
 const cors = require('../cors')
 
-module.exports = (content, config) => (request, response, dev = false) => {
+module.exports = (content, config, dev = false) => (request, response) => {
   config = getConfing(config)
   const params = parse(request.url, true).query
   const lang = params.lang || config.defaultLang

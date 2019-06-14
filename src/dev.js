@@ -33,11 +33,11 @@ module.exports = async () => {
     const pathName = url.parse(request.url).pathname
 
     if (pathName === '/entity') {
-      entityRequestHandler(content, config)(request, response, true)
+      entityRequestHandler(content, config, true)(request, response)
       response.end()
     }
     else if (pathName === '/collection') {
-      collectionRequestHandler(content, config)(request, response, true)
+      collectionRequestHandler(content, config, true)(request, response)
       response.end()
     }
     else if (/^\/static\//.test(pathName)) {

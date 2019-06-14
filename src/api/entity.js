@@ -3,7 +3,7 @@ const getConfing = require('../get-config')
 const getEntity = require('../get-entity')
 const cors = require('../cors')
 
-module.exports = (content, config) => (request, response, dev = false) => {
+module.exports = (content, config, dev = false) => (request, response) => {
   config = getConfing(config)
   const params = parse(request.url, true).query
   const name = params.name
