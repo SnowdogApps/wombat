@@ -1,15 +1,9 @@
 module.exports = (request, response, config, isDev = false) => {
   const origin = request.headers.origin
-  const getWildCards = (val) => {
-    if (val.includes('*')) {
-      const url = val.replace('*', '(.+)')
-      const urlPattern = new RegExp(url)
-
-      return urlPattern.test(origin) ? origin : val
-    }
-    return val
-  }
-  const allowedOrigins = config.allowedOrigins.map(getWildCards)
+  const allowedOrigins = config.allowedOrigins.map(url => {
+    const urlPattern = new RegExp(url.replace('*', '.+'))
+    return urlPattern.test(origin) ? origin : url
+  })
 
   if (isDev) {
     response.setHeader('Access-Control-Allow-Origin', '*')
