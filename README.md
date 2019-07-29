@@ -81,11 +81,12 @@ The core of Wombat. It's the key to get data from collection and to supply entit
     "perPage": 100, // numer of items per page
     "items": ["award", "about", "partner"], // Array of collection items IDs. Items order is preserved.
     "props": ["id", "content"] // return only selected object props
-    "range": {
-      "prop": "published", // name of collection item property used to get range
-      "type": "date", // `number` (default) or `date - type of the prop
-      "start": "2019-01-01", // range start
-      "end": "2019-03-01" // range end
+    "filter": {
+      "prop": "published", // name of collection item property used to filtering
+      "type": "date", // `value`, `number` or `date - type of the filtering
+      "value": "2019-01-01", // value used for filtering, can be also array
+      "from": "2019-01-01", // range start for `number` or `date` type
+      "to": "2019-03-01" // range end for `number` or `date` type
     }
   }
 }
@@ -134,7 +135,7 @@ Retrieve the whole collection as array.
 
 #### Whole collection, but only title and content
 ```
-/collection?name=blog&props=title,title
+/collection?name=blog&props=title,content
 ```
 
 #### Only items selected by ID
@@ -163,4 +164,4 @@ Retrieve the whole collection as array.
 - `perPage` - Numer of items per page.
 - `items` - Comma separated list of collection items IDs. Items order is preserved.
 - `props` - Comma separated list of selected object props, GraphQL-like.
-- `range` - Range config in form of stringified JSON object
+- `filter` - Filtering config in form of stringified JSON object

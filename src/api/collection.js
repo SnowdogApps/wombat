@@ -16,7 +16,7 @@ module.exports = (content, config, dev = false) => (request, response) => {
 
   // Parse JSON
   Object.keys(params)
-    .filter(key => key === 'range')
+    .filter(key =>  ['filter', 'range'].includes(key))
     .forEach(key => params[key] = JSON.parse(params[key]))
 
   try {

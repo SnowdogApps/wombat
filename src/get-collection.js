@@ -1,3 +1,4 @@
+const isArray = require('lodash.isarray')
 const toArray = require('lodash.toarray')
 const sortBy = require('lodash.sortby')
 const camelCase = require('lodash.camelcase')
@@ -25,31 +26,36 @@ module.exports = (content, lang, query) => {
     items = toArray(collection)
   }
 
-  if (query.range) {
-    if (query.range.type === 'date') {
-      if (!query.range.end) {
+  if (query.filter) {
+    if (query.filter.type === 'date') {
+      if (!query.filter.to) {
         throw new Error('You need to define dates range')
       }
 
-      const start = new Date(query.range.start || 0)
-      const end = new Date(query.range.end)
+      const from = new Date(query.filter.from || 0)
+      const to = new Date(query.filter.to)
 
       items = items.filter(item => inRange(
-        new Date(item[query.range.prop]),
-        start,
-        end
+        new Date(item[query.filter.prop]),
+        from,
+        to
       ))
     }
 
-    if (query.range.type === 'number' || !query.range.type) {
-      const start = toNumber(query.range.start || 0)
-      const end = toNumber(query.range.end || Infinity)
+    if (query.filter.type === 'number') {
+      const from = toNumber(query.filter.from || 0)
+      const to = toNumber(query.filter.to || Infinity)
 
       items = items.filter(item => inRange(
-        toNumber(item[query.range.prop]),
-        start,
-        end
+        toNumber(item[query.filter.prop]),
+        from,
+        to
       ))
+    }
+
+    if (query.filter.type === 'value') {
+      const value = isArray(query.filter.value) ? query.filter.value : [query.filter.value]
+      items = items.filter(item => value.includes(item[query.filter.prop]))
     }
   }
 
