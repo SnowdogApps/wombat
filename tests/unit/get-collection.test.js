@@ -86,11 +86,11 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          range: {
-            prop: 'date',
+          filter: {
             type: 'date',
-            start: '2019-03-09',
-            end: '2019-03-11'
+            prop: 'date',
+            from: '2019-03-09',
+            to: '2019-03-11'
           }
         }
       ).items.length
@@ -103,10 +103,10 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          range: {
-            prop: 'date',
+          filter: {
             type: 'date',
-            end: '2019-03-11'
+            prop: 'date',
+            to: '2019-03-11'
           }
         }
       ).items.length
@@ -119,26 +119,27 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          range: {
-            prop: 'date',
+          filter: {
             type: 'date',
-            start: '2019-03-15'
+            prop: 'date',
+            from: '2019-03-15'
           }
         }
       )
     ).toThrowError(new Error('You need to define dates range'))
 
-    // Dates without type
+    // Empty
     expect(
       getCollection(
         content,
         lang,
         {
           name: 'posts',
-          range: {
+          filter: {
+            type: 'date',
             prop: 'date',
-            start: '2019-03-09',
-            end: '2019-03-11'
+            from: '2019-05-09',
+            to: '2019-05-11'
           }
         }
       ).items.length
@@ -154,27 +155,11 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          range: {
-            prop: 'commentsCount',
-            start: '20',
-            end: '30'
-          }
-        }
-      ).items.length
-    ).toBe(1)
-
-    // Numbers range with defined type
-    expect(
-      getCollection(
-        content,
-        lang,
-        {
-          name: 'posts',
-          range: {
+          filter: {
             type: 'number',
             prop: 'commentsCount',
-            start: '20',
-            end: '30'
+            from: '20',
+            to: '30'
           }
         }
       ).items.length
@@ -187,9 +172,10 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          range: {
+          filter: {
+            type: 'number',
             prop: 'commentsCount',
-            end: '30'
+            to: '30'
           }
         }
       ).items.length
@@ -202,9 +188,10 @@ describe('fetches a collection', () => {
         lang,
         {
           name: 'posts',
-          range: {
+          filter: {
+            type: 'number',
             prop: 'commentsCount',
-            start: '30'
+            from: '30'
           }
         }
       ).items.length
