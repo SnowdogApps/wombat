@@ -1,4 +1,3 @@
-const isArray = require('lodash.isarray')
 const toArray = require('lodash.toarray')
 const sortBy = require('lodash.sortby')
 const camelCase = require('lodash.camelcase')
@@ -54,7 +53,7 @@ module.exports = (content, lang, query) => {
     }
 
     if (query.filter.type === 'value') {
-      const value = isArray(query.filter.value) ? query.filter.value : [query.filter.value]
+      const value = Array.isArray(query.filter.value) ? query.filter.value : [query.filter.value]
       items = items.filter(item => value.includes(item[query.filter.prop]))
     }
   }
