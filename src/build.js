@@ -8,20 +8,20 @@ const getConfig = require('./get-config')
 const walk = async dir => {
   dir = path.resolve(dir)
   const tree = {}
-  const files = await fs.readdir(dir)
+  const files = fs.readdirSync(dir)
 
   for (let file of files) {
     const filePath = path.join(dir, file)
     const fileName = path.basename(filePath)
     const propName = camelCase(fileName.replace(/\..*/, ''))
-    const stat = await fs.stat(filePath)
+    const stat = fs.statSync(filePath)
 
     if (stat.isDirectory()) {
       tree[propName] = await walk(filePath)
     }
 
     if (stat.isFile()) {
-      const content = await fs.readFile(filePath, 'utf8')
+      const content = fs.readFileSync(filePath, 'utf8')
       const extension = path.extname(filePath)
 
       switch(extension) {
@@ -44,15 +44,15 @@ module.exports = async (config = {}, content) => {
   const dbPath = path.resolve(config.dest)
 
   // Remove old database
-  if (await fs.pathExists(dbPath)) {
-    await fs.remove(dbPath)
+  if (fs.pathExistsSync(dbPath)) {
+    fs.removeSync(dbPath)
   }
 
   if (!content) {
     content = await walk(config.src)
   }
 
-  await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
+  fs.writeFileSync(dbPath, JSON.stringify(content), 'utf8')
 
   console.log('Build finished!')
 }
