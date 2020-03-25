@@ -37,7 +37,7 @@ module.exports = async () => {
           response.end(fs.readFileSync(filePath))
         }
       }
-      catch (e) {
+      catch(e) {
         response.writeHead(404, 'File not found')
         response.end()
       }
@@ -53,7 +53,8 @@ module.exports = async () => {
     const port = await portfinder.getPortPromise()
     server.listen(port)
     console.log(`Wombat is listening on port ${port}!`)
-  } catch (e) {
+  }
+  catch(e) {
     throw new Error(e)
   }
 }

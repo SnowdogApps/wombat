@@ -1,5 +1,5 @@
 const getCollection = require('../../src/get-collection')
-const content = require('../../wombat.db.json')
+const content = require('../mocks/wombat.db.json')
 
 const lang = 'en'
 const defaultQuery = {
@@ -81,91 +81,120 @@ describe('fetches a collection', () => {
   it('get items with dates in range', () => {
     // Dates range
     expect(
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'date',
-          prop: 'date',
-          from: '2019-03-09',
-          to: '2019-03-11'
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'date',
+            prop: 'date',
+            from: '2019-03-09',
+            to: '2019-03-11'
+          }
         }
-      }).items.length
+      ).items.length
     ).toBe(1)
 
     // Up to date
     expect(
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'date',
-          prop: 'date',
-          to: '2019-03-11'
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'date',
+            prop: 'date',
+            to: '2019-03-11'
+          }
         }
-      }).items.length
+      ).items.length
     ).toBe(2)
 
     // From date
-    expect(() =>
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'date',
-          prop: 'date',
-          from: '2019-03-15'
+    expect(
+      () => getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'date',
+            prop: 'date',
+            from: '2019-03-15'
+          }
         }
-      })
+      )
     ).toThrowError(new Error('You need to define dates range'))
 
     // Empty
     expect(
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'date',
-          prop: 'date',
-          from: '2019-05-09',
-          to: '2019-05-11'
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'date',
+            prop: 'date',
+            from: '2019-05-09',
+            to: '2019-05-11'
+          }
         }
-      }).items.length
+      ).items.length
     ).toBe(0)
   })
+
 
   it('get items with numbers in range', () => {
     // Numbers range
     expect(
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'number',
-          prop: 'commentsCount',
-          from: '20',
-          to: '30'
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'number',
+            prop: 'commentsCount',
+            from: '20',
+            to: '30'
+          }
         }
-      }).items.length
+      ).items.length
     ).toBe(1)
 
     // Numbers up to
     expect(
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'number',
-          prop: 'commentsCount',
-          to: '30'
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'number',
+            prop: 'commentsCount',
+            to: '30'
+          }
         }
-      }).items.length
+      ).items.length
     ).toBe(1)
 
     // Numbers starting from
     expect(
-      getCollection(content, lang, {
-        name: 'posts',
-        filter: {
-          type: 'number',
-          prop: 'commentsCount',
-          from: '30'
+      getCollection(
+        content,
+        lang,
+        {
+          name: 'posts',
+          filter: {
+            type: 'number',
+            prop: 'commentsCount',
+            from: '30'
+          }
         }
-      }).items.length
+      ).items.length
     ).toBe(2)
   })
 })

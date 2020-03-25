@@ -15,8 +15,8 @@ module.exports = (content, dev = false) => (request, response) => {
 
   // Parse JSON
   Object.keys(params)
-  .filter(key =>  ['filter', 'range'].includes(key))
-  .forEach(key => params[key] = JSON.parse(params[key]))
+    .filter(key =>  ['filter', 'range'].includes(key))
+    .forEach(key => params[key] = JSON.parse(params[key]))
 
   try {
     const collection = getCollection(content, lang, params)
