@@ -14,3 +14,6 @@ rules:
   semi:
     - error
     - never
+  brace-style:
+   - error
+   - stroustrup
