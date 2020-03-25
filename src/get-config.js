@@ -24,4 +24,8 @@ const getConfig = () => {
   return defaultsDeep(localConfig, defaults);
 };
 
-module.exports = getConfig();
+const config = getConfig();
+
+Object.freeze(config);
+
+module.exports = config;
