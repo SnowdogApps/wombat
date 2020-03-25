@@ -49,7 +49,8 @@ module.exports = async () => {
     const port = await portfinder.getPortPromise()
     server.listen(port)
     console.log(`Wombat is listening on port ${port}!`)
-  } catch (e) {
+  }
+  catch(e) {
     throw new Error(e)
   }
 }
