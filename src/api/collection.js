@@ -1,11 +1,10 @@
 const { parse } = require('url')
 const camelCase = require('lodash.camelcase')
-const getConfing = require('../get-config')
+const config = require('../get-config')
 const getCollection = require('../get-collection')
 const cors = require('../cors')
 
-module.exports = (content, config, dev = false) => (request, response) => {
-  config = getConfing(config)
+module.exports = (content, dev = false) => (request, response) => {
   const params = parse(request.url, true).query
   const lang = params.lang || config.defaultLang
 
@@ -24,7 +23,7 @@ module.exports = (content, config, dev = false) => (request, response) => {
 
     response.setHeader('Content-Type', 'application/json; charset=utf-8')
 
-    cors(request, response, config, dev)
+    cors(request, response, dev)
 
     if (collection.pagination) {
       response.setHeader('X-Wombat-Total', collection.pagination.total)

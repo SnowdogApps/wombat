@@ -1,4 +1,3 @@
-
 const getEntity = require('../../src/get-entity')
 const content = require('../mocks/wombat.db.json')
 

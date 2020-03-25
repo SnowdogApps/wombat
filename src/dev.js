@@ -5,23 +5,12 @@ const fs = require('fs-extra')
 const portfinder = require('portfinder')
 
 const build = require('./build')
-const getConfig = require('./get-config')
+const config = require('./get-config')
 
 const entityRequestHandler = require('./api/entity')
 const collectionRequestHandler = require('./api/collection')
 
 module.exports = async () => {
-  // Prepare config
-  const localConfigPath = path.resolve('./wombat.config.json')
-
-  let localConfig = {}
-  if (fs.existsSync(localConfigPath)) {
-    localConfig = require(localConfigPath)
-  }
-
-  const config = getConfig(localConfig)
-
-  // Prepare content
   if (config.dev.build) {
     await build()
   }
@@ -33,11 +22,11 @@ module.exports = async () => {
     const pathName = url.parse(request.url).pathname
 
     if (pathName === '/entity') {
-      entityRequestHandler(content, config, true)(request, response)
+      entityRequestHandler(content, true)(request, response)
       response.end()
     }
     else if (pathName === '/collection') {
-      collectionRequestHandler(content, config, true)(request, response)
+      collectionRequestHandler(content, true)(request, response)
       response.end()
     }
     else if (/^\/static\//.test(pathName)) {

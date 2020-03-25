@@ -1,4 +1,6 @@
-module.exports = (request, response, config, isDev = false) => {
+const config = require('./get-config')
+
+module.exports = (request, response, isDev = false) => {
   const origin = request.headers.origin
   const allowedOrigins = config.allowedOrigins.map(url => {
     const urlPattern = new RegExp(url.replace('*', '.+'))

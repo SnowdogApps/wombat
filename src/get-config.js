@@ -1,4 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep')
+const path = require('path')
+const fs = require('fs')
 
 const defaults = {
   defaultLang: 'en',
@@ -11,6 +13,17 @@ const defaults = {
   }
 }
 
-module.exports = (config = {}) => {
-  return defaultsDeep(config, defaults)
+const getConfig = () => {
+  const localConfigPath = path.resolve('./wombat.config.json')
+
+  let localConfig = {}
+  if (fs.existsSync(localConfigPath)) {
+    localConfig = require(localConfigPath)
+  }
+
+  return defaultsDeep(localConfig, defaults)
 }
+
+const config = getConfig()
+
+module.exports = config
