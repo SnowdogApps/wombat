@@ -24,7 +24,7 @@ describe('fetches a collection', () => {
   it('checks that collections are sorted in default order (desc)', () => {
     const query = {
       ...defaultQuery,
-      sortBy: "title"
+      sortBy: 'title'
     }
 
     const { items } = getCollection(content, lang, query)
@@ -34,8 +34,8 @@ describe('fetches a collection', () => {
   it('checks that collections are sorted by desc order', () => {
     const query = {
       ...defaultQuery,
-      sortBy: "title",
-      sort: "desc"
+      sortBy: 'title',
+      sort: 'desc'
     }
 
     const { items } = getCollection(content, lang, query)
@@ -71,7 +71,7 @@ describe('fetches a collection', () => {
   it('checks collection props', () => {
     const query = {
       ...defaultQuery,
-      props: ["content.author", "id"]
+      props: ['content.author', 'id']
     }
     const { items } = getCollection(content, lang, query)
     expect(Array.isArray(items)).toBe(true)

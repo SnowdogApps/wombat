@@ -22,7 +22,7 @@
     "build-mocks": "node tests/mocks/build",
     "test": "yarn build-mocks && jest",
     "test-dev": "yarn build-mocks && jest --watchAll",
-    "lint": "eslint **/*.js"
+    "lint": "eslint src examples tests"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
