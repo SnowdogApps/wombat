@@ -17,7 +17,8 @@ module.exports = (content, dev = false) => (request, response) => {
 
     if (!entity) throw new Error('Entity not found')
     response.end(JSON.stringify(entity))
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e)
     response.statusCode = 404
     response.end(`Cannot GET ${request.url}`)

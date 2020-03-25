@@ -19,7 +19,8 @@ module.exports = (content, lang, query) => {
 
     // Convert to array
     items = toArray(items)
-  } else {
+  }
+  else {
     // Convert whole collection to array
     items = toArray(collection)
   }
@@ -33,24 +34,26 @@ module.exports = (content, lang, query) => {
       const from = new Date(query.filter.from || 0)
       const to = new Date(query.filter.to)
 
-      items = items.filter(item =>
-        inRange(new Date(item[query.filter.prop]), from, to)
-      )
+      items = items.filter(item => inRange(
+        new Date(item[query.filter.prop]),
+        from,
+        to
+      ))
     }
 
     if (query.filter.type === 'number') {
       const from = toNumber(query.filter.from || 0)
       const to = toNumber(query.filter.to || Infinity)
 
-      items = items.filter(item =>
-        inRange(toNumber(item[query.filter.prop]), from, to)
-      )
+      items = items.filter(item => inRange(
+        toNumber(item[query.filter.prop]),
+        from,
+        to
+      ))
     }
 
     if (query.filter.type === 'value') {
-      const value = Array.isArray(query.filter.value)
-        ? query.filter.value
-        : [query.filter.value]
+      const value = Array.isArray(query.filter.value) ? query.filter.value : [query.filter.value]
       items = items.filter(item => value.includes(item[query.filter.prop]))
     }
   }
@@ -83,7 +86,10 @@ module.exports = (content, lang, query) => {
     }
 
     // Pick only items from current page
-    items = items.splice((query.page - 1) * query.perPage, query.perPage)
+    items = items.splice(
+      (query.page - 1) * query.perPage,
+      query.perPage
+    )
   }
 
   // Return only selected object properties

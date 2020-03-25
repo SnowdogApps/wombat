@@ -9,15 +9,13 @@ module.exports = (request, response, isDev = false) => {
 
   if (isDev) {
     response.setHeader('Access-Control-Allow-Origin', '*')
-  } else if (allowedOrigins.includes(origin)) {
+  }
+  else if (allowedOrigins.includes(origin)) {
     response.setHeader('Access-Control-Allow-Origin', origin)
   }
 
   response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET')
-  response.setHeader(
-    'Access-Control-Expose-Headers',
-    'X-Wombat-Total, X-Wombat-TotalPages'
-  )
+  response.setHeader('Access-Control-Expose-Headers', 'X-Wombat-Total, X-Wombat-TotalPages')
   response.setHeader('Access-Control-Max-Age', 2592000)
 
   if (request.method === 'OPTIONS') {

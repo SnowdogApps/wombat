@@ -8,7 +8,11 @@ module.exports = (content, lang, name) => {
 
   Object.keys(entity).map(prop => {
     if (entity[prop].query) {
-      const collection = getCollection(content, lang, entity[prop].query)
+      const collection = getCollection(
+        content,
+        lang,
+        entity[prop].query
+      )
 
       if (collection) {
         entity[prop] = collection.items

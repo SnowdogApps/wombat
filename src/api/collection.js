@@ -11,14 +11,12 @@ module.exports = (content, dev = false) => (request, response) => {
   // Transform comma separated strings lists to arrays
   Object.keys(params)
     .filter(key => key === 'items' || key === 'props')
-    .forEach(
-      key => (params[key] = params[key].split(',').map(key => camelCase(key)))
-    )
+    .forEach(key => params[key] = params[key].split(',').map(key => camelCase(key)))
 
   // Parse JSON
   Object.keys(params)
-    .filter(key => ['filter', 'range'].includes(key))
-    .forEach(key => (params[key] = JSON.parse(params[key])))
+  .filter(key =>  ['filter', 'range'].includes(key))
+  .forEach(key => params[key] = JSON.parse(params[key]))
 
   try {
     const collection = getCollection(content, lang, params)
@@ -29,14 +27,12 @@ module.exports = (content, dev = false) => (request, response) => {
 
     if (collection.pagination) {
       response.setHeader('X-Wombat-Total', collection.pagination.total)
-      response.setHeader(
-        'X-Wombat-TotalPages',
-        collection.pagination.totalPages
-      )
+      response.setHeader('X-Wombat-TotalPages', collection.pagination.totalPages)
     }
 
     response.end(JSON.stringify(collection.items))
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e)
     response.statusCode = 404
     response.end(`Cannot GET ${request.url}`)

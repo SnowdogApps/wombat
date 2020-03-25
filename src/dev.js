@@ -24,21 +24,25 @@ module.exports = async () => {
     if (pathName === '/entity') {
       entityRequestHandler(content, true)(request, response)
       response.end()
-    } else if (pathName === '/collection') {
+    }
+    else if (pathName === '/collection') {
       collectionRequestHandler(content, true)(request, response)
       response.end()
-    } else if (/^\/static\//.test(pathName)) {
+    }
+    else if (/^\/static\//.test(pathName)) {
       const filePath = path.resolve(pathName.replace(/^\/static/, './public'))
 
       try {
         if (fs.statSync(filePath).isFile()) {
           response.end(fs.readFileSync(filePath))
         }
-      } catch (e) {
+      }
+      catch (e) {
         response.writeHead(404, 'File not found')
         response.end()
       }
-    } else {
+    }
+    else {
       response.writeHead(404, 'Route not found')
       response.end()
     }

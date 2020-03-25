@@ -25,7 +25,7 @@ const walk = async dir => {
       const content = fs.readFileSync(filePath, 'utf8')
       const extension = path.extname(filePath)
 
-      switch (extension) {
+      switch(extension) {
         case '.json':
           tree[propName] = JSON.parse(content)
           break
@@ -39,7 +39,7 @@ const walk = async dir => {
   return tree
 }
 
-module.exports = async content => {
+module.exports = async (content) => {
   console.log('Building...')
 
   const dbPath = path.resolve(config.dest)
