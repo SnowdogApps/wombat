@@ -39,7 +39,7 @@ const walk = async dir => {
   return tree
 }
 
-module.exports = async (content) => {
+module.exports = async () => {
   console.log('Building...')
 
   const dbPath = path.resolve(config.dest)
@@ -53,9 +53,7 @@ module.exports = async (content) => {
     ...config.showdownOptions
   })
 
-  if (!content) {
-    content = await walk(config.src)
-  }
+  const content = await walk(config.src)
 
   fs.writeFileSync(dbPath, JSON.stringify(content), 'utf8')
 

@@ -26,6 +26,4 @@ const getConfig = () => {
 
 const config = getConfig()
 
-Object.freeze(config)
-
 module.exports = config
