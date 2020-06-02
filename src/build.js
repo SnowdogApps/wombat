@@ -5,7 +5,7 @@ const showdown = require('showdown')
 const converter = new showdown.Converter()
 const getConfig = require('./get-config')
 
-const walk = async dir => {
+const walk = async (dir, wombatUrl) => {
   dir = path.resolve(dir)
   const tree = {}
   const files = fs.readdirSync(dir)
@@ -17,15 +17,18 @@ const walk = async dir => {
     const stat = fs.statSync(filePath)
 
     if (stat.isDirectory()) {
-      tree[propName] = await walk(filePath)
+      tree[propName] = await walk(filePath, wombatUrl)
     }
 
     if (stat.isFile()) {
-      const content = fs.readFileSync(filePath, 'utf8')
+      let content = fs.readFileSync(filePath, 'utf8')
       const extension = path.extname(filePath)
 
       switch(extension) {
         case '.json':
+          if(wombatUrl && content.includes('wombatUrl')) {
+              content = content.replace(/\{\{wombatUrl\}\}/g, wombatUrl)
+          }
           tree[propName] = JSON.parse(content)
           break
         case '.md':
@@ -49,7 +52,7 @@ module.exports = async (config = {}, content) => {
   }
 
   if (!content) {
-    content = await walk(config.src)
+    content = await walk(config.src, config.wombatUrl)
   }
 
   fs.writeFileSync(dbPath, JSON.stringify(content), 'utf8')
