@@ -21,10 +21,10 @@ const walk = async (dir, wombatUrl) => {
     }
 
     if (stat.isFile()) {
-      let content = fs.readFileSync(filePath, 'utf8')
+      const rawContent = fs.readFileSync(filePath, 'utf8')
+      const content = rawContent.replace(/\{\{wombatUrl\}\}/g, wombatUrl)
       const extension = path.extname(filePath)
 
-      content = content.replace(/\{\{wombatUrl\}\}/g, wombatUrl)
       switch(extension) {
         case '.json':
           tree[propName] = JSON.parse(content)
