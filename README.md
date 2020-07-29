@@ -41,7 +41,7 @@ This guide is for [ZEIT Now](https://zeit.co/docs/v2/deployments/official-builde
 {
   "defaultLang": "en", // Fallback language when request is send without `lang` query param.
   "allowedOrigins": [], // List of domains used to set Access-Control-Allow-Origin (CORS) response header
-  "wombatUrl": "http://google.com", // String to substitute all occurences of {{wombatUrl}} in *.json and *.md files.
+  "wombatUrl": "http://api.your.app", // String to replace all occurences of {{wombatUrl}} with given URL.
   "dev": {
     "port": "3000", // Port used by the dev web server to listen for requests
     "build": true // Determines if new "database" file should be build from files before dev server will be started.
