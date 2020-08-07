@@ -11,15 +11,7 @@ const entityRequestHandler = require('./api/entity')
 const collectionRequestHandler = require('./api/collection')
 
 module.exports = async () => {
-  // Prepare config
-  const localConfigPath = path.resolve('./wombat.config.json')
-
-  let localConfig = {}
-  if (fs.existsSync(localConfigPath)) {
-    localConfig = require(localConfigPath)
-  }
-
-  const config = getConfig(localConfig)
+  const config = getConfig()
 
   // Prepare content
   if (config.dev.build) {
