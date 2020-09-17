@@ -41,19 +41,27 @@ const walk = async (dir, wombatUrl) => {
 
 module.exports = async (config = {}, content) => {
   console.log('Building...')
-  config = getConfig(config)
-  const dbPath = path.resolve(config.dest)
 
-  // Remove old database
-  if (fs.pathExistsSync(dbPath)) {
-    fs.removeSync(dbPath)
+  try {
+    config = getConfig(config)
+    const dbPath = path.resolve(config.dest)
+
+    // Remove old database
+    if (await fs.pathExists(dbPath)) {
+      await fs.remove(dbPath)
+    }
+
+    if (!content) {
+      content = await walk(config.src)
+    }
+
+    await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
   }
-
-  if (!content) {
-    content = await walk(config.src, config.wombatUrl)
+  catch(error) {
+    console.error('Build failed :(', error)
+    process.exit(1)
   }
-
-  fs.writeFileSync(dbPath, JSON.stringify(content), 'utf8')
 
   console.log('Build finished!')
+  process.exit(0)
 }
