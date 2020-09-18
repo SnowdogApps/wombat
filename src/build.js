@@ -5,7 +5,7 @@ const showdown = require('showdown')
 const converter = new showdown.Converter()
 const getConfig = require('./get-config')
 
-const walk = async (dir, wombatUrl) => {
+async function walk (dir) {
   dir = path.resolve(dir)
   const tree = {}
   const files = fs.readdirSync(dir)
@@ -17,26 +17,31 @@ const walk = async (dir, wombatUrl) => {
     const stat = fs.statSync(filePath)
 
     if (stat.isDirectory()) {
-      tree[propName] = await walk(filePath, wombatUrl)
+      tree[propName] = await walk(filePath)
     }
 
     if (stat.isFile()) {
       const rawContent = fs.readFileSync(filePath, 'utf8')
-      const content = rawContent.replace(/\{\{wombatUrl\}\}/g, wombatUrl)
       const extension = path.extname(filePath)
 
       switch(extension) {
         case '.json':
-          tree[propName] = JSON.parse(content)
+          tree[propName] = JSON.parse(rawContent)
           break
         case '.md':
-          tree[propName] = converter.makeHtml(content)
+          tree[propName] = converter.makeHtml(rawContent)
           break
       }
     }
   }
 
   return tree
+}
+
+function materializeUrl(content, url) {
+  const string = JSON.stringify(content)
+  const replaced = string.replace(/\{\{wombatUrl\}\}/g, url)
+  return JSON.parse(replaced)
 }
 
 module.exports = async (config = {}, content) => {
@@ -53,6 +58,10 @@ module.exports = async (config = {}, content) => {
 
     if (!content) {
       content = await walk(config.src)
+    }
+
+    if (config.wombatUrl) {
+      content = materializeUrl(content, config.wombatUrl)
     }
 
     await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
