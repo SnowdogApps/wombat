@@ -1,7 +1,7 @@
 {
   "name": "@snowdog/wombat",
-  "version": "1.0.0-alpha.34",
-  "description": "File based, headless CMS for building configurable API",
+  "version": "1.0.0",
+  "description": "File based, headless CMS for building configurable APIs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SnowdogApps/wombat.git"
