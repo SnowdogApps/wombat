@@ -47,30 +47,23 @@ function materializeUrl(content, url) {
 module.exports = async (config = {}, content) => {
   console.log('Building...')
 
-  try {
-    config = getConfig(config)
-    const dbPath = path.resolve(config.dest)
+  config = getConfig(config)
+  const dbPath = path.resolve(config.dest)
 
-    // Remove old database
-    if (await fs.pathExists(dbPath)) {
-      await fs.remove(dbPath)
-    }
-
-    if (!content) {
-      content = await walk(config.src)
-    }
-
-    if (config.wombatUrl) {
-      content = materializeUrl(content, config.wombatUrl)
-    }
-
-    await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
+  // Remove old database
+  if (await fs.pathExists(dbPath)) {
+    await fs.remove(dbPath)
   }
-  catch(error) {
-    console.error('Build failed :(', error)
-    process.exit(1)
+
+  if (!content) {
+    content = await walk(config.src)
   }
+
+  if (config.wombatUrl) {
+    content = materializeUrl(content, config.wombatUrl)
+  }
+
+  await fs.writeFile(dbPath, JSON.stringify(content), 'utf8')
 
   console.log('Build finished!')
-  process.exit(0)
 }

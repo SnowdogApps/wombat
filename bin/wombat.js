@@ -9,7 +9,14 @@ const task = process.argv.slice(2)[0] || 'build'
       await dev()
       break
     case 'build':
-      await build()
+      try {
+        await build()
+        process.exit(0)
+      }
+      catch(error) {
+        console.error('Build failed :(', error)
+        process.exit(1)
+      }
       break
     default:
       throw new Error('Unknown option. Only `dev` and `build` are supported.')
