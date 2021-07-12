@@ -1,4 +1,3 @@
-const { parse } = require('url')
 const camelCase = require('lodash.camelcase')
 const getConfing = require('../get-config')
 const getCollection = require('../get-collection')
@@ -6,7 +5,8 @@ const cors = require('../cors')
 
 module.exports = (content, config, dev = false) => (request, response) => {
   config = getConfing(config)
-  const params = parse(request.url, true).query
+  const url = new URL(request.url, `http://${request.headers.host}`)
+  const params = Object.fromEntries(url.searchParams)
   const lang = params.lang || config.defaultLang
 
   // Transform comma separated strings lists to arrays
@@ -20,21 +20,25 @@ module.exports = (content, config, dev = false) => (request, response) => {
     .forEach(key => params[key] = JSON.parse(params[key]))
 
   try {
-    const collection = getCollection(content, lang, params)
-
-    response.setHeader('Content-Type', 'application/json; charset=utf-8')
-
     cors(request, response, config, dev)
+
+    // Prevent adding content to already sent response
+    if (response.writableEnded) {
+      return
+    }
+
+    const collection = getCollection(content, lang, params)
 
     if (collection.pagination) {
       response.setHeader('X-Wombat-Total', collection.pagination.total)
       response.setHeader('X-Wombat-TotalPages', collection.pagination.totalPages)
     }
 
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
     response.end(JSON.stringify(collection.items))
   }
-  catch (e) {
-    console.error(e)
+  catch (error) {
+    console.error(error)
     response.statusCode = 404
     response.end(`Cannot GET ${request.url}`)
   }
