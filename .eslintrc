@@ -15,5 +15,5 @@ rules:
     - error
     - never
   brace-style:
-   - error
-   - stroustrup
+    - error
+    - stroustrup
