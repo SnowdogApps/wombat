@@ -18,7 +18,7 @@ module.exports = (content, config, dev = false) => (request, response) => {
 
     const entity = getEntity(content, lang, name)
     if (!entity) {
-      throw new Error('Entity not found')
+      throw new Error(`Entity ${lang}/${name} not found`)
     }
 
     response.setHeader('Content-Type', 'application/json; charset=utf-8')
